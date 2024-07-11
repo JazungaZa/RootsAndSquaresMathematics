@@ -12,4 +12,5 @@
     <string name="next">NEXT</string>
     <string name="write_an_answer">Please write an answer or click the next button.</string>
     <string name="game_over">Game Over</string>
+    <string name="score_big">SCORE</string>
 </resources>

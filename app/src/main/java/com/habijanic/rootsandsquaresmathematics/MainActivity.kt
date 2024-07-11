@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
             val input = numUpTo.text.toString()
             if (input.isNullOrEmpty()){
-                Toast.makeText(applicationContext,"enter a number",Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext,getString(R.string.enter_a_number),Toast.LENGTH_SHORT).show()
             }
             else{
                 number = Integer.parseInt(input)

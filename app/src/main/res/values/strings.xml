@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">RootsAndSquaresMathematics</string>
+    <string name="up_to_number">Up to number:</string>
+    <string name="select_the_maximum_number">Select the maximum number</string>
+    <string name="squares">SQUARES</string>
+    <string name="roots">ROOTS</string>
 </resources>

@@ -15,5 +15,8 @@
     <string name="game_over">Game Over</string>
     <string name="score_big">SCORE</string>
     <string name="enter_a_number">Please enter a number</string>
+    <string name="try_again">TRY AGAIN</string>
+    <string name="main_menu">MAIN MENU</string>
+    <string name="exit">EXIT</string>
 
 </resources>

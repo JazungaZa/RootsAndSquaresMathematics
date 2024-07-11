@@ -1,6 +1,7 @@
 package com.habijanic.rootsandsquaresmathematics
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,9 @@ class ScoreActivity : AppCompatActivity() {
 
     var score = 0
     lateinit var finalScoreText : TextView
+    lateinit var tryAgainButton : Button
+    lateinit var mainMenuButton : Button
+    lateinit var exitButton : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +27,10 @@ class ScoreActivity : AppCompatActivity() {
         }
 
         finalScoreText = findViewById(R.id.textViewFinalScore)
+        tryAgainButton = findViewById(R.id.buttonTryAgain)
+        mainMenuButton = findViewById(R.id.buttonMainMenu)
+        exitButton = findViewById(R.id.buttonExit)
+
         score = intent.getIntExtra("score",0)
         finalScoreText.text = score.toString()
     }

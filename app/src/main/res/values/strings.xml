@@ -4,9 +4,12 @@
     <string name="select_the_maximum_number">Select the maximum number</string>
     <string name="squares">SQUARES</string>
     <string name="roots">ROOTS</string>
+    <string name="square">square</string>
     <string name="score">Score:</string>
     <string name="life">Life:</string>
     <string name="time">Time:</string>
     <string name="answer">Answer:</string>
     <string name="next">NEXT</string>
+    <string name="write_an_answer">Please write an answer or click the next button.</string>
+    <string name="game_over">Game Over</string>
 </resources>

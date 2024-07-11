@@ -5,6 +5,7 @@
     <string name="squares">SQUARES</string>
     <string name="roots">ROOTS</string>
     <string name="square">square</string>
+    <string name="root">root</string>
     <string name="score">Score:</string>
     <string name="life">Life:</string>
     <string name="time">Time:</string>
@@ -13,4 +14,6 @@
     <string name="write_an_answer">Please write an answer or click the next button.</string>
     <string name="game_over">Game Over</string>
     <string name="score_big">SCORE</string>
+    <string name="enter_a_number">Please enter a number</string>
+
 </resources>

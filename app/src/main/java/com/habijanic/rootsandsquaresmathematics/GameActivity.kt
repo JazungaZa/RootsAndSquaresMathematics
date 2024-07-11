@@ -1,5 +1,6 @@
 package com.habijanic.rootsandsquaresmathematics
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.Button
@@ -25,7 +26,8 @@ class GameActivity : AppCompatActivity() {
     var score = 0
     var life = 3
 
-    var i = 0
+    var number1 = 0
+    var game = 1
 
     lateinit var timer : CountDownTimer
     private val startTimerInMillis : Long = 60000
@@ -48,12 +50,18 @@ class GameActivity : AppCompatActivity() {
         answerText = findViewById(R.id.editTextNumberAnswer)
         nextButton = findViewById(R.id.buttonNext)
 
+        number1 = intent.getIntExtra("number",0)
+        game = intent.getIntExtra("game",1)
+
         game()
 
         nextButton.setOnClickListener {
             if (life==0){
 
-                Toast.makeText(applicationContext,getString(R.string.game_over), Toast.LENGTH_LONG).show()
+
+                val intent = Intent(this@GameActivity,ScoreActivity::class.java)
+                intent.putExtra("score",score)
+                startActivity(intent)
 
             }
                 else{
@@ -81,7 +89,11 @@ class GameActivity : AppCompatActivity() {
                         resetTimer()
                         if(life==0){
 
-                            Toast.makeText(applicationContext,getString(R.string.game_over), Toast.LENGTH_LONG).show()
+
+                            val intent = Intent(this@GameActivity,ScoreActivity::class.java)
+                            intent.putExtra("score",score)
+                            startActivity(intent)
+
                         }
                         else{
 
@@ -99,10 +111,26 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun game(){
-        val number = Random.nextInt(0,20)
-        questionText.text = getString(R.string.square) + ": $number"
-        correctAnswer = number * number
+
+        if (game==1){
+
+            val number = Random.nextInt(0,number1)
+            questionText.text = getString(R.string.square) + ": $number"
+            correctAnswer = number * number
+
+        }
+        else{
+
+            val number = Random.nextInt(0,number1)
+            correctAnswer = number * number
+            questionText.text = getString(R.string.root) + ": $correctAnswer"
+
+            correctAnswer = number
+        }
+
         startTimer()
+
+
     }
     fun startTimer(){
         timer = object : CountDownTimer(timeLeftInMillis, 1000){

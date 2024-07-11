@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
             }
             else{
                 number = Integer.parseInt(input)
-                Toast.makeText(applicationContext,"$number",Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@MainActivity,GameActivity::class.java)
                 intent.putExtra("number",number)
                 intent.putExtra("game",1)

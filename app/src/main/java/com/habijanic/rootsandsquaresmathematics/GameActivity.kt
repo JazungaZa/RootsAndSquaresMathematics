@@ -61,6 +61,7 @@ class GameActivity : AppCompatActivity() {
 
                 val intent = Intent(this@GameActivity,ScoreActivity::class.java)
                 intent.putExtra("score",score)
+                intent.putExtra("number",number1)
                 startActivity(intent)
                 finish()
 
@@ -93,6 +94,7 @@ class GameActivity : AppCompatActivity() {
 
                             val intent = Intent(this@GameActivity,ScoreActivity::class.java)
                             intent.putExtra("score",score)
+                            intent.putExtra("number",number1)
                             startActivity(intent)
                             finish()
 

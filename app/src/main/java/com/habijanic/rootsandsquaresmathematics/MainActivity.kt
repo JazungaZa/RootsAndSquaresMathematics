@@ -1,5 +1,6 @@
 package com.habijanic.rootsandsquaresmathematics
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -34,11 +35,13 @@ class MainActivity : AppCompatActivity() {
 
             val input = numUpTo.text.toString()
             if (input.isNullOrEmpty()){
-                Toast.makeText(applicationContext,"enter a number",Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext,"enter a number",Toast.LENGTH_SHORT).show()
             }
             else{
                 number = Integer.parseInt(input)
-                Toast.makeText(applicationContext,"$number",Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext,"$number",Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@MainActivity,GameActivity::class.java)
+                startActivity(intent)
             }
 
         }
@@ -46,11 +49,13 @@ class MainActivity : AppCompatActivity() {
 
             val input = numUpTo.text.toString()
             if (input.isNullOrEmpty()){
-                Toast.makeText(applicationContext,"enter a number",Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext,"enter a number",Toast.LENGTH_SHORT).show()
             }
             else{
                 number = Integer.parseInt(input)
-                Toast.makeText(applicationContext,"$number",Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext,"$number",Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@MainActivity,GameActivity::class.java)
+                startActivity(intent)
             }
 
         }

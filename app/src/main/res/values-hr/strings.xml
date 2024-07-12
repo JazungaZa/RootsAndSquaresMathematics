@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RootsAndSquaresMathematics</string>
+    <string name="up_to_number">Do broja:</string>
+    <string name="select_the_maximum_number">Odaberi najveći broj</string>
+    <string name="squares">KVADRATI</string>
+    <string name="roots">KORIJENI</string>
+    <string name="square">kvadrat</string>
+    <string name="root">korijen</string>
+    <string name="score">Bodovi:</string>
+    <string name="life">Životi:</string>
+    <string name="time">Vrijeme:</string>
+    <string name="answer">Odgovor:</string>
+    <string name="next">SLJEDEĆE</string>
+    <string name="write_an_answer">Molim te napiši odgovor</string>
+    <string name="game_over">Igra gotova</string>
+    <string name="score_big">REZULTAT</string>
+    <string name="enter_a_number">Molim te upiši broj</string>
+    <string name="try_again">POKUŠAJ PONOVNO</string>
+    <string name="main_menu">GLAVNI MENI</string>
+    <string name="exit">IZAĐI</string>
+</resources>

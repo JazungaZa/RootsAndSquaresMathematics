@@ -41,7 +41,8 @@
             android:inputType="number"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="italic" />
     </LinearLayout>
 
     <Button

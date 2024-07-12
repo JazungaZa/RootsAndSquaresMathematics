@@ -2,6 +2,7 @@ package com.habijanic.rootsandsquaresmathematics
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.Button
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -29,6 +31,8 @@ class GameActivity : AppCompatActivity() {
     lateinit var questionText : TextView
     lateinit var answerText : EditText
     lateinit var nextButton: Button
+    lateinit var correct : TextView
+
     var correctAnswer = 0
     var score = 0
     var life = 3
@@ -58,6 +62,8 @@ class GameActivity : AppCompatActivity() {
         questionText = findViewById(R.id.textViewQuestion)
         answerText = findViewById(R.id.editTextNumberAnswer)
         nextButton = findViewById(R.id.buttonNext)
+        correct = findViewById(R.id.textViewCorrect)
+        correct.isVisible=false
 
         number1 = intent.getIntExtra("number",0)
         game = intent.getIntExtra("game",1)
@@ -70,13 +76,14 @@ class GameActivity : AppCompatActivity() {
         nextButton.setOnClickListener {
             if (life==0){
 
-
+                mainScope.launch {
+                    delay(delayMillis)
                     val intent = Intent(this@GameActivity, ScoreActivity::class.java)
                     intent.putExtra("score", score)
                     intent.putExtra("number", number1)
                     startActivity(intent)
                     finish()
-
+                }
 
             }
             else{
@@ -90,12 +97,14 @@ class GameActivity : AppCompatActivity() {
 
                     val userAnswer = input.toInt()
 
+
                     if(userAnswer==correctAnswer){
                         score = score + 10
                         pauseTimer()
 
-                        var color = ContextCompat.getColor(this,R.color.correct)
-                        answerText.setBackgroundColor(color)
+
+
+                        correct.isVisible=true
                         mainScope.launch{
                             delay(delayMillis)
                             game()
@@ -103,8 +112,8 @@ class GameActivity : AppCompatActivity() {
 
                             resetTimer()
                             answerText.setText("")
-                            color = ContextCompat.getColor(this@GameActivity,R.color.white)
-                            answerText.setBackgroundColor(color)
+
+                            correct.isVisible=false
                         }
 
                     }
@@ -115,23 +124,30 @@ class GameActivity : AppCompatActivity() {
                         if(life==0){
 
 
-                            val intent = Intent(this@GameActivity,ScoreActivity::class.java)
-                            intent.putExtra("score",score)
-                            intent.putExtra("number",number1)
-                            startActivity(intent)
-                            finish()
-
+                            mainScope.launch {
+                                delay(delayMillis)
+                                val intent = Intent(this@GameActivity, ScoreActivity::class.java)
+                                intent.putExtra("score", score)
+                                intent.putExtra("number", number1)
+                                startActivity(intent)
+                                finish()
+                            }
                         }
                         else{
 
 
+
+                            correct.isVisible=true
+
                             var color = ContextCompat.getColor(this,R.color.wrong)
-                            answerText.setBackgroundColor(color)
+                            correct.setBackgroundColor(color)
                             mainScope.launch{
                                 delay(delayMillis)
                                 game()
-                                color = ContextCompat.getColor(this@GameActivity,R.color.white)
-                                answerText.setBackgroundColor(color)
+
+                                correct.isVisible=false
+                                var color = ContextCompat.getColor(this@GameActivity,R.color.correct)
+                                correct.setBackgroundColor(color)
                                 answerText.setText("")
                                 lifeText.text=life.toString()
                             }

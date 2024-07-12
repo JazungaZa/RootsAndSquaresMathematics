@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
+    android:background="@drawable/background"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -21,13 +22,14 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="139dp"
+            android:layout_width="161dp"
             android:layout_height="40dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:gravity="center"
             android:text="@string/up_to_number"
-            android:textSize="20sp" />
+            android:textColor="@color/white"
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/editTextNumber"
@@ -37,7 +39,9 @@
             android:gravity="center"
             android:hint="@string/select_the_maximum_number"
             android:inputType="number"
-            android:textSize="12sp" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <Button

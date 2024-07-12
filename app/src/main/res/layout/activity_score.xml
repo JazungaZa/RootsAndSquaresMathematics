@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".ScoreActivity">
 
     <TextView
@@ -13,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="110dp"
         android:text="@string/score_big"
-        android:textSize="24sp"
+        android:textColor="@color/yellow"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:text="0"
-        android:textSize="20sp"
+        android:textColor="@color/yellow"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +61,7 @@
         android:id="@+id/buttonExit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="220dp"
+        android:layout_marginBottom="200dp"
         android:text="@string/exit"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

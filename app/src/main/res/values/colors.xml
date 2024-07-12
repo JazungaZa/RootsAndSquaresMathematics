@@ -5,5 +5,7 @@
     <color name="yellow">#F0F016</color>
     <color name="red">#F01616</color>
     <color name="blue">#1698F0</color>
+    <color name="wrong">#D0FF0000</color>
+    <color name="correct">#05ED0E</color>
 
 </resources>

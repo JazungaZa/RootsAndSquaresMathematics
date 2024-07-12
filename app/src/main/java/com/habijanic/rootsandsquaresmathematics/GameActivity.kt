@@ -1,5 +1,6 @@
 package com.habijanic.rootsandsquaresmathematics
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -9,8 +10,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.Locale
 import kotlin.random.Random
 
@@ -33,6 +40,8 @@ class GameActivity : AppCompatActivity() {
     private val startTimerInMillis : Long = 60000
     var timeLeftInMillis : Long = startTimerInMillis
 
+    private val mainScope = CoroutineScope(Dispatchers.Main)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -53,20 +62,24 @@ class GameActivity : AppCompatActivity() {
         number1 = intent.getIntExtra("number",0)
         game = intent.getIntExtra("game",1)
 
+
+        val delayMillis : Long = 500
+
         game()
 
         nextButton.setOnClickListener {
             if (life==0){
 
 
-                val intent = Intent(this@GameActivity,ScoreActivity::class.java)
-                intent.putExtra("score",score)
-                intent.putExtra("number",number1)
-                startActivity(intent)
-                finish()
+                    val intent = Intent(this@GameActivity, ScoreActivity::class.java)
+                    intent.putExtra("score", score)
+                    intent.putExtra("number", number1)
+                    startActivity(intent)
+                    finish()
+
 
             }
-                else{
+            else{
 
                 val input = answerText.text.toString()
                 if (input == ""){
@@ -80,10 +93,20 @@ class GameActivity : AppCompatActivity() {
                     if(userAnswer==correctAnswer){
                         score = score + 10
                         pauseTimer()
-                        resetTimer()
-                        answerText.setText("")
-                        game()
-                        scoreText.text = score.toString()
+
+                        var color = ContextCompat.getColor(this,R.color.correct)
+                        answerText.setBackgroundColor(color)
+                        mainScope.launch{
+                            delay(delayMillis)
+                            game()
+                            scoreText.text = score.toString()
+
+                            resetTimer()
+                            answerText.setText("")
+                            color = ContextCompat.getColor(this@GameActivity,R.color.white)
+                            answerText.setBackgroundColor(color)
+                        }
+
                     }
                     else{
                         life--
@@ -101,9 +124,17 @@ class GameActivity : AppCompatActivity() {
                         }
                         else{
 
-                            answerText.setText("")
-                            lifeText.text=life.toString()
-                            game()
+
+                            var color = ContextCompat.getColor(this,R.color.wrong)
+                            answerText.setBackgroundColor(color)
+                            mainScope.launch{
+                                delay(delayMillis)
+                                game()
+                                color = ContextCompat.getColor(this@GameActivity,R.color.white)
+                                answerText.setBackgroundColor(color)
+                                answerText.setText("")
+                                lifeText.text=life.toString()
+                            }
 
                         }
 
@@ -168,6 +199,10 @@ class GameActivity : AppCompatActivity() {
     fun resetTimer(){
         timeLeftInMillis = startTimerInMillis
         updateText()
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        mainScope.cancel()
     }
 
 }

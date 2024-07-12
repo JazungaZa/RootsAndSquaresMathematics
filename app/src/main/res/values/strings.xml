@@ -11,7 +11,7 @@
     <string name="time">Time:</string>
     <string name="answer">Answer:</string>
     <string name="next">NEXT</string>
-    <string name="write_an_answer">Please write an answer or click the next button.</string>
+    <string name="write_an_answer">Please write an answer</string>
     <string name="game_over">Game Over</string>
     <string name="score_big">SCORE</string>
     <string name="enter_a_number">Please enter a number</string>

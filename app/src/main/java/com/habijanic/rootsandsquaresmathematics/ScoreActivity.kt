@@ -8,6 +8,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 class ScoreActivity : AppCompatActivity() {
 
@@ -17,6 +19,7 @@ class ScoreActivity : AppCompatActivity() {
     lateinit var tryAgainButton : Button
     lateinit var mainMenuButton : Button
     lateinit var exitButton : Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +39,7 @@ class ScoreActivity : AppCompatActivity() {
         score = intent.getIntExtra("score",0)
         number = intent.getIntExtra("number",0)
         finalScoreText.text = score.toString()
+
 
         tryAgainButton.setOnClickListener {
 

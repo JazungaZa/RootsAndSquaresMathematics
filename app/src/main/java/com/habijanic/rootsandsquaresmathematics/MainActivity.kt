@@ -16,6 +16,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var numUpTo : EditText
     lateinit var square : Button
     lateinit var root : Button
+
+    lateinit var exitButton : Button
     var number = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         numUpTo = findViewById(R.id.editTextNumber)
         square = findViewById(R.id.buttonSquares)
         root = findViewById(R.id.buttonRoots)
+        exitButton = findViewById(R.id.buttonExitMain)
 
         square.setOnClickListener {
 
@@ -66,6 +69,15 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("game",2)
                 startActivity(intent)
             }
+
+        }
+        exitButton.setOnClickListener {
+
+            //val intent = Intent(Intent.ACTION_MAIN)
+            //intent.addCategory(Intent.CATEGORY_HOME)
+            //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            //startActivity(intent)
+            this.finishAffinity()
 
         }
 

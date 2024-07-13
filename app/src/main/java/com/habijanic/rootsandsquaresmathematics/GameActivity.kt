@@ -42,8 +42,9 @@ class GameActivity : AppCompatActivity() {
     var game = 1
 
     lateinit var timer : CountDownTimer
-    private val startTimerInMillis : Long = 60000
+    private val startTimerInMillis : Long = 20000
     var timeLeftInMillis : Long = startTimerInMillis
+    val delayMillis : Long = 500
 
     private val mainScope = CoroutineScope(Dispatchers.Main)
 
@@ -74,7 +75,6 @@ class GameActivity : AppCompatActivity() {
         game = intent.getIntExtra("game",1)
 
 
-        val delayMillis : Long = 500
 
         game()
 
@@ -108,6 +108,7 @@ class GameActivity : AppCompatActivity() {
                         pauseTimer()
 
 
+                        resetTimer()
 
                         correct.isVisible=true
                         mainScope.launch{
@@ -115,7 +116,6 @@ class GameActivity : AppCompatActivity() {
                             game()
                             scoreText.text = score.toString()
 
-                            resetTimer()
                             answerText.setText("")
 
                             correct.isVisible=false
@@ -170,14 +170,14 @@ class GameActivity : AppCompatActivity() {
 
         if (game==1){
 
-            val number = Random.nextInt(0,number1)
+            val number = Random.nextInt(1,number1)
             questionText.text = getString(R.string.square) + ": $number"
             correctAnswer = number * number
 
         }
         else{
 
-            val number = Random.nextInt(0,number1)
+            val number = Random.nextInt(1,number1)
             correctAnswer = number * number
             questionText.text = getString(R.string.root) + ": $correctAnswer"
 
@@ -205,6 +205,21 @@ class GameActivity : AppCompatActivity() {
 
                 life--
                 lifeText.text = life.toString()
+
+                if (life==0)
+                {
+                    mainScope.launch {
+                        delay(delayMillis)
+                        val intent = Intent(this@GameActivity, ScoreActivity::class.java)
+                        intent.putExtra("score", score)
+                        intent.putExtra("number", number1)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
+                else{
+                    game()
+                }
             }
         }.start()
 

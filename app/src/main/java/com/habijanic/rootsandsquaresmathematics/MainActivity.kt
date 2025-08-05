@@ -47,6 +47,9 @@ class MainActivity : AppCompatActivity() {
             if (input.isNullOrEmpty()){
                 Toast.makeText(applicationContext,getString(R.string.enter_a_number),Toast.LENGTH_SHORT).show()
             }
+            else if (Integer.parseInt(input) < 2){
+                Toast.makeText(applicationContext,getString(R.string.number_to_small),Toast.LENGTH_SHORT).show()
+            }
             else{
                 number = Integer.parseInt(input)
                 val intent = Intent(this@MainActivity,GameActivity::class.java)
@@ -61,6 +64,9 @@ class MainActivity : AppCompatActivity() {
             val input = numUpTo.text.toString()
             if (input.isNullOrEmpty()){
                 Toast.makeText(applicationContext,getString(R.string.enter_a_number),Toast.LENGTH_SHORT).show()
+            }
+            else if (Integer.parseInt(input) < 2){
+                Toast.makeText(applicationContext,getString(R.string.number_to_small),Toast.LENGTH_SHORT).show()
             }
             else{
                 number = Integer.parseInt(input)

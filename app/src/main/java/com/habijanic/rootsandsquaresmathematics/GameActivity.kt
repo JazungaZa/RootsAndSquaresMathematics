@@ -89,27 +89,17 @@ class GameActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }
-
-            }
-            else{
-
+            }else{
                 val input = answerText.text.toString()
                 if (input == ""){
                     Toast.makeText(applicationContext, getString(R.string.write_an_answer),
                         Toast.LENGTH_SHORT).show()
-                }
-                else{
-
+                }else{
                     val userAnswer = input.toInt()
-
-
                     if(userAnswer==correctAnswer){
                         score = score + 10
                         pauseTimer()
-
-
                         resetTimer()
-
                         correct.isVisible=true
                         mainScope.launch{
                             delay(delayMillis)
@@ -120,15 +110,11 @@ class GameActivity : AppCompatActivity() {
 
                             correct.isVisible=false
                         }
-
-                    }
-                    else{
+                    }else{
                         life--
                         pauseTimer()
                         resetTimer()
                         if(life==0){
-
-
                             mainScope.launch {
                                 delay(delayMillis)
                                 val intent = Intent(this@GameActivity, ScoreActivity::class.java)
@@ -137,13 +123,8 @@ class GameActivity : AppCompatActivity() {
                                 startActivity(intent)
                                 finish()
                             }
-                        }
-                        else{
-
-
-
+                        }else{
                             correct.isVisible=true
-
                             var color = ContextCompat.getColor(this,R.color.wrong)
                             correct.setBackgroundColor(color)
                             mainScope.launch{
@@ -191,14 +172,10 @@ class GameActivity : AppCompatActivity() {
     fun startTimer(){
         timer = object : CountDownTimer(timeLeftInMillis, 1000){
             override fun onTick(millisUntilFinished : Long){
-
                 timeLeftInMillis = millisUntilFinished
                 updateText()
-
             }
-
             override fun onFinish() {
-
                 pauseTimer()
                 resetTimer()
                 updateText()
@@ -216,14 +193,11 @@ class GameActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     }
-                }
-                else{
+                }else{
                     game()
                 }
             }
         }.start()
-
-
     }
     fun updateText(){
         val remTime : Int = (timeLeftInMillis / 1000).toInt()

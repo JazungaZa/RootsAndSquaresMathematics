@@ -9,14 +9,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 
 class ScoreActivity : AppCompatActivity() {
 
     var score = 0
     var number = 0
     lateinit var finalScoreText : TextView
+    lateinit var bestScoreText : TextView
     lateinit var tryAgainButton : Button
     lateinit var mainMenuButton : Button
     lateinit var exitButton : Button
@@ -37,6 +36,7 @@ class ScoreActivity : AppCompatActivity() {
         window.navigationBarColor = resources.getColor(android.R.color.transparent)
 
         finalScoreText = findViewById(R.id.textViewFinalScore)
+        bestScoreText = findViewById(R.id.BestScore)
         tryAgainButton = findViewById(R.id.buttonTryAgain)
         mainMenuButton = findViewById(R.id.buttonMainMenu)
         exitButton = findViewById(R.id.buttonExit)
@@ -44,6 +44,7 @@ class ScoreActivity : AppCompatActivity() {
         score = intent.getIntExtra("score",0)
         number = intent.getIntExtra("number",0)
         finalScoreText.text = score.toString()
+        bestScoreText.text = BestScoreStore.updateIfHigher(this, score).toString()
 
 
         tryAgainButton.setOnClickListener {

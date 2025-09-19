@@ -38,7 +38,7 @@ class GameActivity : AppCompatActivity() {
     var score = 0
     var life = 3
 
-    var number1 = 0
+    var number1 = 1
     var type = 1
 
     lateinit var timer : CountDownTimer
@@ -71,7 +71,7 @@ class GameActivity : AppCompatActivity() {
         correct = findViewById(R.id.textViewCorrect)
         correct.isVisible=false
 
-        number1 = intent.getIntExtra("number",0)
+        number1 = intent.getIntExtra("number",1)
         type = intent.getIntExtra("game",0)
 
 
@@ -152,14 +152,14 @@ class GameActivity : AppCompatActivity() {
 
         if (type==0){
 
-            val number = Random.nextInt(1,number1)
+            val number = Random.nextInt(1,number1+1)
             questionText.text = getString(R.string.square) + ": $number"
             correctAnswer = number * number
 
         }
         else{
 
-            val number = Random.nextInt(1,number1)
+            val number = Random.nextInt(1,number1+1)
             correctAnswer = number * number
             questionText.text = getString(R.string.root) + ": $correctAnswer"
 

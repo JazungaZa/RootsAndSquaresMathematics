@@ -14,6 +14,7 @@ class ScoreActivity : AppCompatActivity() {
 
     var score = 0
     var number = 0
+    var type = 0
     lateinit var finalScoreText : TextView
     lateinit var bestScoreText : TextView
     lateinit var tryAgainButton : Button
@@ -43,14 +44,16 @@ class ScoreActivity : AppCompatActivity() {
 
         score = intent.getIntExtra("score",0)
         number = intent.getIntExtra("number",0)
+        type = intent.getIntExtra("type",0)
         finalScoreText.text = score.toString()
-        bestScoreText.text = BestScoreStore.updateIfHigher(this, score).toString()
+        bestScoreText.text = BestScoreStore.updateIfHigher(this, score, type).toString()
 
 
         tryAgainButton.setOnClickListener {
 
             val intent = Intent(this@ScoreActivity,GameActivity::class.java)
             intent.putExtra("number",number)
+            intent.putExtra("game",type)
             startActivity(intent)
             finish()
 
@@ -68,6 +71,9 @@ class ScoreActivity : AppCompatActivity() {
             //intent.addCategory(Intent.CATEGORY_HOME)
             //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             //startActivity(intent)
+
+            //BestScoreStore.reset(this)
+
             this.finishAffinity()
 
         }

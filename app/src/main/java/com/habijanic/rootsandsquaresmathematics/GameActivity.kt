@@ -39,7 +39,7 @@ class GameActivity : AppCompatActivity() {
     var life = 3
 
     var number1 = 0
-    var game = 1
+    var type = 1
 
     lateinit var timer : CountDownTimer
     private val startTimerInMillis : Long = 20000
@@ -72,7 +72,7 @@ class GameActivity : AppCompatActivity() {
         correct.isVisible=false
 
         number1 = intent.getIntExtra("number",0)
-        game = intent.getIntExtra("game",1)
+        type = intent.getIntExtra("game",0)
 
 
 
@@ -120,6 +120,7 @@ class GameActivity : AppCompatActivity() {
                                 val intent = Intent(this@GameActivity, ScoreActivity::class.java)
                                 intent.putExtra("score", score)
                                 intent.putExtra("number", number1)
+                                intent.putExtra("type", type)
                                 startActivity(intent)
                                 finish()
                             }
@@ -149,7 +150,7 @@ class GameActivity : AppCompatActivity() {
 
     fun game(){
 
-        if (game==1){
+        if (type==0){
 
             val number = Random.nextInt(1,number1)
             questionText.text = getString(R.string.square) + ": $number"

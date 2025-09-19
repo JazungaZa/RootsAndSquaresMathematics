@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                 number = Integer.parseInt(input)
                 val intent = Intent(this@MainActivity,GameActivity::class.java)
                 intent.putExtra("number",number)
-                intent.putExtra("game",1)
+                intent.putExtra("game",0)
                 startActivity(intent)
             }
 
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                 number = Integer.parseInt(input)
                 val intent = Intent(this@MainActivity,GameActivity::class.java)
                 intent.putExtra("number",number)
-                intent.putExtra("game",2)
+                intent.putExtra("game",1)
                 startActivity(intent)
             }
 

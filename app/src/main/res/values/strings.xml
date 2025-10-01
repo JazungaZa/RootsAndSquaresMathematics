@@ -20,5 +20,9 @@
     <string name="try_again">TRY AGAIN</string>
     <string name="main_menu">MAIN MENU</string>
     <string name="exit">EXIT</string>
+    <string name="division">DIVISION</string>
+    <string name="multiplication">MULTIPLICATION</string>
+    <string name="subtraction">SUBTRACTION</string>
+    <string name="addition">ADDITION</string>
 
 </resources>

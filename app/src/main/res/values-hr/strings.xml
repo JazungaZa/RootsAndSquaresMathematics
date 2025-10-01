@@ -21,4 +21,8 @@
     <string name="exit">IZAĐI</string>
     <string name="number_to_small">Molim te upiši veći broj</string>
     <string name="best_score_big">NAJBOLJI REZULTAT</string>
+    <string name="division">DIJELJENJE</string>
+    <string name="multiplication">MNOŽENJE</string>
+    <string name="subtraction">ODUZIMANJE</string>
+    <string name="addition">ZBRAJANJE</string>
 </resources>

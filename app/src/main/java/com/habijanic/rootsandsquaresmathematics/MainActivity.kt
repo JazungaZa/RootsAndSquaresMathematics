@@ -14,6 +14,10 @@ import androidx.core.view.WindowInsetsCompat
 class MainActivity : AppCompatActivity() {
 
     lateinit var numUpTo : EditText
+    lateinit var add : Button
+    lateinit var sub : Button
+    lateinit var multiply : Button
+    lateinit var divide : Button
     lateinit var square : Button
     lateinit var root : Button
 
@@ -37,45 +41,32 @@ class MainActivity : AppCompatActivity() {
 
 
         numUpTo = findViewById(R.id.editTextNumber)
+        add = findViewById(R.id.buttonAddition)
+        sub = findViewById(R.id.buttonSubtraction)
+        multiply = findViewById(R.id.buttonMultiplication)
+        divide = findViewById(R.id.buttonDivision)
         square = findViewById(R.id.buttonSquares)
         root = findViewById(R.id.buttonRoots)
+
         exitButton = findViewById(R.id.buttonExitMain)
 
+        add.setOnClickListener{
+            numberValidation(0)
+        }
+        sub.setOnClickListener {
+            numberValidation(1)
+        }
+        multiply.setOnClickListener {
+            numberValidation(2)
+        }
+        divide.setOnClickListener {
+            numberValidation(3)
+        }
         square.setOnClickListener {
-
-            val input = numUpTo.text.toString()
-            if (input.isNullOrEmpty()){
-                Toast.makeText(applicationContext,getString(R.string.enter_a_number),Toast.LENGTH_SHORT).show()
-            }
-            else if (Integer.parseInt(input) < 2){
-                Toast.makeText(applicationContext,getString(R.string.number_to_small),Toast.LENGTH_SHORT).show()
-            }
-            else{
-                number = Integer.parseInt(input)
-                val intent = Intent(this@MainActivity,GameActivity::class.java)
-                intent.putExtra("number",number)
-                intent.putExtra("game",0)
-                startActivity(intent)
-            }
-
+            numberValidation(4)
         }
         root.setOnClickListener {
-
-            val input = numUpTo.text.toString()
-            if (input.isNullOrEmpty()){
-                Toast.makeText(applicationContext,getString(R.string.enter_a_number),Toast.LENGTH_SHORT).show()
-            }
-            else if (Integer.parseInt(input) < 2){
-                Toast.makeText(applicationContext,getString(R.string.number_to_small),Toast.LENGTH_SHORT).show()
-            }
-            else{
-                number = Integer.parseInt(input)
-                val intent = Intent(this@MainActivity,GameActivity::class.java)
-                intent.putExtra("number",number)
-                intent.putExtra("game",1)
-                startActivity(intent)
-            }
-
+            numberValidation(5)
         }
         exitButton.setOnClickListener {
 
@@ -87,5 +78,21 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    private fun numberValidation(type: Int) {
+        val input = numUpTo.text.toString()
+        if (input.isNullOrEmpty()){
+            Toast.makeText(applicationContext,getString(R.string.enter_a_number),Toast.LENGTH_SHORT).show()
+        }
+        else if (Integer.parseInt(input) < 2){
+            Toast.makeText(applicationContext,getString(R.string.number_to_small),Toast.LENGTH_SHORT).show()
+        }else{
+            number = Integer.parseInt(input)
+            val intent = Intent(this@MainActivity,GameActivity::class.java)
+            intent.putExtra("number",number)
+            intent.putExtra("game",type)
+            startActivity(intent)
+        }
     }
 }

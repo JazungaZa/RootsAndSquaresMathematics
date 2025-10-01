@@ -22,6 +22,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Locale
+import kotlin.math.sqrt
 import kotlin.random.Random
 
 class GameActivity : AppCompatActivity() {
@@ -38,7 +39,7 @@ class GameActivity : AppCompatActivity() {
     var score = 0
     var life = 3
 
-    var number1 = 1
+    var numberMax = 1
     var type = 1
 
     lateinit var timer : CountDownTimer
@@ -71,7 +72,7 @@ class GameActivity : AppCompatActivity() {
         correct = findViewById(R.id.textViewCorrect)
         correct.isVisible=false
 
-        number1 = intent.getIntExtra("number",1)
+        numberMax = intent.getIntExtra("number",1)
         type = intent.getIntExtra("game",0)
 
 
@@ -85,7 +86,7 @@ class GameActivity : AppCompatActivity() {
                     delay(delayMillis)
                     val intent = Intent(this@GameActivity, ScoreActivity::class.java)
                     intent.putExtra("score", score)
-                    intent.putExtra("number", number1)
+                    intent.putExtra("number", numberMax)
                     startActivity(intent)
                     finish()
                 }
@@ -105,9 +106,7 @@ class GameActivity : AppCompatActivity() {
                             delay(delayMillis)
                             game()
                             scoreText.text = score.toString()
-
                             answerText.setText("")
-
                             correct.isVisible=false
                         }
                     }else{
@@ -119,7 +118,7 @@ class GameActivity : AppCompatActivity() {
                                 delay(delayMillis)
                                 val intent = Intent(this@GameActivity, ScoreActivity::class.java)
                                 intent.putExtra("score", score)
-                                intent.putExtra("number", number1)
+                                intent.putExtra("number", numberMax)
                                 intent.putExtra("type", type)
                                 startActivity(intent)
                                 finish()
@@ -138,9 +137,7 @@ class GameActivity : AppCompatActivity() {
                                 answerText.setText("")
                                 lifeText.text=life.toString()
                             }
-
                         }
-
                     }
                 }
             }
@@ -152,18 +149,49 @@ class GameActivity : AppCompatActivity() {
 
         if (type==0){
 
-            val number = Random.nextInt(1,number1+1)
+            val numberA = Random.nextInt(1,numberMax+1)
+            val numberB = Random.nextInt(1,numberMax+1)
+            questionText.text = getString(R.string.addition) + ": $numberA, $numberB"
+            correctAnswer = numberA + numberB
+
+        }
+        else if (type==1){
+
+            val numberA = Random.nextInt(1,numberMax+1)
+            val numberB = Random.nextInt(1,numberA+1)
+            questionText.text = getString(R.string.subtraction) + ": $numberA, $numberB"
+            correctAnswer = numberA - numberB
+
+        }
+        else if (type==2){
+
+            val numberA = Random.nextInt(1,numberMax+1)
+            val numberB = Random.nextInt(1,numberMax+1)
+            questionText.text = getString(R.string.multiplication) + ": $numberA, $numberB"
+            correctAnswer = numberA * numberB
+
+        }
+        else if (type==3){
+
+            val numberA = Random.nextInt(1,numberMax+1)
+            val divisors = (1..numberA).filter { numberA % it == 0 }
+            val numberB = divisors.random()
+            questionText.text = getString(R.string.division) + ": $numberA, $numberB"
+            correctAnswer = numberA / numberB
+
+        }
+        else if (type==4){
+
+            val number = Random.nextInt(1,numberMax+1)
             questionText.text = getString(R.string.square) + ": $number"
             correctAnswer = number * number
 
         }
-        else{
-
-            val number = Random.nextInt(1,number1+1)
-            correctAnswer = number * number
-            questionText.text = getString(R.string.root) + ": $correctAnswer"
-
-            correctAnswer = number
+        else if (type==5){
+            val maxRoot = sqrt((numberMax+1).toDouble()).toInt()
+            correctAnswer = Random.nextInt(1, maxRoot + 1)
+            val number = correctAnswer * correctAnswer
+            questionText.text = getString(R.string.root) + ": $number"
         }
 
         startTimer()
@@ -190,7 +218,7 @@ class GameActivity : AppCompatActivity() {
                         delay(delayMillis)
                         val intent = Intent(this@GameActivity, ScoreActivity::class.java)
                         intent.putExtra("score", score)
-                        intent.putExtra("number", number1)
+                        intent.putExtra("number", numberMax)
                         startActivity(intent)
                         finish()
                     }

@@ -16,14 +16,16 @@ object BestScoreStore {
         val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
         var current: Int
         var best: Int
-        if (type==1){
+        if (type==5){
             current = prefs.getInt(KEY_ROOTS, 0)
             best = maxOf(current, score)
             if (best != current) prefs.edit().putInt(KEY_ROOTS, best).apply()
-        }else {
+        }else if (type==4) {
             current = prefs.getInt(KEY_SQUARES, 0)
             best = maxOf(current, score)
             if (best != current) prefs.edit().putInt(KEY_SQUARES, best).apply()
+        }else{
+            best = 0
         }
         return best
     }

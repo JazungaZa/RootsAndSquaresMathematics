@@ -72,7 +72,7 @@ class ScoreActivity : AppCompatActivity() {
             //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             //startActivity(intent)
 
-            //BestScoreStore.reset(this)
+            BestScoreStore.reset(this)
 
             this.finishAffinity()
 

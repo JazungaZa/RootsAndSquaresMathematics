@@ -4,8 +4,16 @@
     <string name="select_the_maximum_number">Select the maximum number</string>
     <string name="squares">SQUARES</string>
     <string name="roots">ROOTS</string>
-    <string name="square">square</string>
-    <string name="root">root</string>
+    <string name="division">DIVISION</string>
+    <string name="multiplication">MULTIPLICATION</string>
+    <string name="subtraction">SUBTRACTION</string>
+    <string name="addition">ADDITION</string>
+    <string name="square_small">Square</string>
+    <string name="root_small">Root</string>
+    <string name="addition_small">Addition</string>
+    <string name="subtraction_small">Subtraction</string>
+    <string name="multiplication_small">Multiplication</string>
+    <string name="division_small">Division</string>
     <string name="score">Score:</string>
     <string name="life">Life:</string>
     <string name="time">Time:</string>
@@ -20,9 +28,5 @@
     <string name="try_again">TRY AGAIN</string>
     <string name="main_menu">MAIN MENU</string>
     <string name="exit">EXIT</string>
-    <string name="division">DIVISION</string>
-    <string name="multiplication">MULTIPLICATION</string>
-    <string name="subtraction">SUBTRACTION</string>
-    <string name="addition">ADDITION</string>
 
 </resources>

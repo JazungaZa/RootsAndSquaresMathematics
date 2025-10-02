@@ -15,6 +15,7 @@ class ScoreActivity : AppCompatActivity() {
     var score = 0
     var number = 0
     var type = 0
+    lateinit var typeText : TextView
     lateinit var finalScoreText : TextView
     lateinit var bestScoreText : TextView
     lateinit var tryAgainButton : Button
@@ -36,6 +37,7 @@ class ScoreActivity : AppCompatActivity() {
             View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         window.navigationBarColor = resources.getColor(android.R.color.transparent)
 
+        typeText = findViewById(R.id.textViewType)
         finalScoreText = findViewById(R.id.textViewFinalScore)
         bestScoreText = findViewById(R.id.BestScore)
         tryAgainButton = findViewById(R.id.buttonTryAgain)
@@ -48,6 +50,7 @@ class ScoreActivity : AppCompatActivity() {
         finalScoreText.text = score.toString()
         bestScoreText.text = BestScoreStore.updateIfHigher(this, score, type).toString()
 
+        setTypeText(type)
 
         tryAgainButton.setOnClickListener {
 
@@ -78,5 +81,23 @@ class ScoreActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    private fun setTypeText(type: Int) {
+        if(type==0){
+            typeText.text=getString(R.string.addition)
+        }else if(type==1){
+            typeText.text=getString(R.string.subtraction)
+        }else if(type==2){
+            typeText.text=getString(R.string.multiplication)
+        }else if(type==3){
+            typeText.text=getString(R.string.division)
+        }else if(type==4){
+            typeText.text=getString(R.string.squares)
+        }else if(type==5){
+            typeText.text=getString(R.string.roots)
+        }else{
+            typeText.text=" "
+        }
     }
 }

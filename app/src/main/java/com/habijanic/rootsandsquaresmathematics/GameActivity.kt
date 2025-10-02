@@ -148,55 +148,42 @@ class GameActivity : AppCompatActivity() {
     fun game(){
 
         if (type==0){
-
-            val numberA = Random.nextInt(1,numberMax+1)
-            val numberB = Random.nextInt(1,numberMax+1)
-            questionText.text = getString(R.string.addition) + ": $numberA, $numberB"
+            val numberA = Random.nextInt(0,numberMax+1)
+            val numberB = Random.nextInt(0,numberMax+1)
+            questionText.text = getString(R.string.addition_small) + ": $numberA + $numberB"
             correctAnswer = numberA + numberB
-
         }
         else if (type==1){
-
             val numberA = Random.nextInt(1,numberMax+1)
-            val numberB = Random.nextInt(1,numberA+1)
-            questionText.text = getString(R.string.subtraction) + ": $numberA, $numberB"
+            val numberB = Random.nextInt(0,numberA+1)
+            questionText.text = getString(R.string.subtraction_small) + ": $numberA - $numberB"
             correctAnswer = numberA - numberB
-
         }
         else if (type==2){
-
             val numberA = Random.nextInt(1,numberMax+1)
             val numberB = Random.nextInt(1,numberMax+1)
-            questionText.text = getString(R.string.multiplication) + ": $numberA, $numberB"
+            questionText.text = getString(R.string.multiplication_small) + ": $numberA \u00D7 $numberB"
             correctAnswer = numberA * numberB
-
         }
         else if (type==3){
-
             val numberA = Random.nextInt(1,numberMax+1)
             val divisors = (1..numberA).filter { numberA % it == 0 }
             val numberB = divisors.random()
-            questionText.text = getString(R.string.division) + ": $numberA, $numberB"
+            questionText.text = getString(R.string.division_small) + ": "+numberA+ " \u00F7 "+ numberB
             correctAnswer = numberA / numberB
-
         }
         else if (type==4){
-
             val number = Random.nextInt(1,numberMax+1)
-            questionText.text = getString(R.string.square) + ": $number"
+            questionText.text = getString(R.string.square_small) + ": $number"+"\u00B2"
             correctAnswer = number * number
-
         }
         else if (type==5){
             val maxRoot = sqrt((numberMax+1).toDouble()).toInt()
             correctAnswer = Random.nextInt(1, maxRoot + 1)
             val number = correctAnswer * correctAnswer
-            questionText.text = getString(R.string.root) + ": $number"
+            questionText.text = getString(R.string.root_small) + ": "+"\u221A"+number
         }
-
         startTimer()
-
-
     }
     fun startTimer(){
         timer = object : CountDownTimer(timeLeftInMillis, 1000){

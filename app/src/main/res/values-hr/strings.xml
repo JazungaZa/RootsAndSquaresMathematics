@@ -5,8 +5,8 @@
     <string name="select_the_maximum_number">Odaberi najveći broj</string>
     <string name="squares">KVADRATI</string>
     <string name="roots">KORIJENI</string>
-    <string name="square">kvadrat</string>
-    <string name="root">korijen</string>
+    <string name="square_small">Kvadrat</string>
+    <string name="root_small">korijen</string>
     <string name="score">Bodovi:</string>
     <string name="life">Životi:</string>
     <string name="time">Vrijeme:</string>
@@ -25,4 +25,8 @@
     <string name="multiplication">MNOŽENJE</string>
     <string name="subtraction">ODUZIMANJE</string>
     <string name="addition">ZBRAJANJE</string>
+    <string name="addition_small">Zbrajanje</string>
+    <string name="subtraction_small">Oduzimanje</string>
+    <string name="multiplication_small">Množenje</string>
+    <string name="division_small">Dijeljenje</string>
 </resources>

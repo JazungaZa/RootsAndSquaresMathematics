@@ -13,13 +13,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="8dp"
         android:text="@string/best_score_big"
         android:textColor="@color/yellow"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewType" />
 
     <TextView
         android:id="@+id/BestScore"
@@ -69,9 +69,9 @@
         android:id="@+id/buttonMainMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:text="@string/main_menu"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonExit"
         app:layout_constraintEnd_toEndOf="@id/buttonTryAgain"
         app:layout_constraintStart_toStartOf="@id/buttonTryAgain"
         app:layout_constraintTop_toBottomOf="@id/buttonTryAgain" />
@@ -80,10 +80,22 @@
         android:id="@+id/buttonExit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:text="@string/exit"
         android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewFinalScore"
         app:layout_constraintEnd_toEndOf="@id/buttonMainMenu"
-        app:layout_constraintStart_toStartOf="@id/buttonMainMenu"
-        app:layout_constraintTop_toBottomOf="@id/buttonMainMenu" />
+        app:layout_constraintStart_toStartOf="@id/buttonMainMenu" />
+
+    <TextView
+        android:id="@+id/textViewType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/addition"
+        android:textColor="@color/yellow"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

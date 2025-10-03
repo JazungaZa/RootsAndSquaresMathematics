@@ -1,11 +1,8 @@
 package com.habijanic.rootsandsquaresmathematics
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -14,7 +11,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,22 +26,22 @@ import kotlin.random.Random
 
 class GameActivity : AppCompatActivity() {
 
-    lateinit var scoreText : TextView
+    private lateinit var scoreText : TextView
     lateinit var lifeText : TextView
-    lateinit var timeText : TextView
-    lateinit var questionText : TextView
-    lateinit var answerText : EditText
-    lateinit var nextButton: Button
-    lateinit var correct : TextView
+    private lateinit var timeText : TextView
+    private lateinit var questionText : TextView
+    private lateinit var answerText : EditText
+    private lateinit var nextButton: Button
+    private lateinit var correct : TextView
 
-    var correctAnswer = 0
+    private var correctAnswer = 0
     var score = 0
     var life = 3
 
     var numberMax = 1
-    var type = 1
+    private var type = 1
 
-    lateinit var timer : CountDownTimer
+    private lateinit var timer : CountDownTimer
     private val startTimerInMillis : Long = 20000
     var timeLeftInMillis : Long = startTimerInMillis
     val delayMillis : Long = 500
@@ -58,10 +57,12 @@ class GameActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        // Remove background color of navigation bar
-        window.decorView.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        window.navigationBarColor = resources.getColor(android.R.color.transparent)
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        val controller = WindowInsetsControllerCompat(window, window.decorView)
+        controller.hide(WindowInsetsCompat.Type.navigationBars())
+        controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        window.navigationBarColor = ContextCompat.getColor(this, android.R.color.transparent)
 
         scoreText = findViewById(R.id.textViewScore)
         lifeText = findViewById(R.id.textViewLife)
@@ -98,7 +99,7 @@ class GameActivity : AppCompatActivity() {
                 }else{
                     val userAnswer = input.toInt()
                     if(userAnswer==correctAnswer){
-                        score = score + 10
+                        score += 10
                         pauseTimer()
                         resetTimer()
                         correct.isVisible=true
@@ -132,7 +133,7 @@ class GameActivity : AppCompatActivity() {
                                 game()
 
                                 correct.isVisible=false
-                                var color = ContextCompat.getColor(this@GameActivity,R.color.correct)
+                                color = ContextCompat.getColor(this@GameActivity,R.color.correct)
                                 correct.setBackgroundColor(color)
                                 answerText.setText("")
                                 lifeText.text=life.toString()
@@ -147,45 +148,48 @@ class GameActivity : AppCompatActivity() {
 
     fun game(){
 
-        if (type==0){
-            val numberA = Random.nextInt(0,numberMax+1)
-            val numberB = Random.nextInt(0,numberMax+1)
-            questionText.text = getString(R.string.addition_small) + ": $numberA + $numberB"
-            correctAnswer = numberA + numberB
-        }
-        else if (type==1){
-            val numberA = Random.nextInt(1,numberMax+1)
-            val numberB = Random.nextInt(0,numberA+1)
-            questionText.text = getString(R.string.subtraction_small) + ": $numberA - $numberB"
-            correctAnswer = numberA - numberB
-        }
-        else if (type==2){
-            val numberA = Random.nextInt(1,numberMax+1)
-            val numberB = Random.nextInt(1,numberMax+1)
-            questionText.text = getString(R.string.multiplication_small) + ": $numberA \u00D7 $numberB"
-            correctAnswer = numberA * numberB
-        }
-        else if (type==3){
-            val numberA = Random.nextInt(1,numberMax+1)
-            val divisors = (1..numberA).filter { numberA % it == 0 }
-            val numberB = divisors.random()
-            questionText.text = getString(R.string.division_small) + ": "+numberA+ " \u00F7 "+ numberB
-            correctAnswer = numberA / numberB
-        }
-        else if (type==4){
-            val number = Random.nextInt(1,numberMax+1)
-            questionText.text = getString(R.string.square_small) + ": $number"+"\u00B2"
-            correctAnswer = number * number
-        }
-        else if (type==5){
-            val maxRoot = sqrt((numberMax+1).toDouble()).toInt()
-            correctAnswer = Random.nextInt(1, maxRoot + 1)
-            val number = correctAnswer * correctAnswer
-            questionText.text = getString(R.string.root_small) + ": "+"\u221A"+number
+        when (type) {
+            0 -> {
+                val numberA = Random.nextInt(0,numberMax+1)
+                val numberB = Random.nextInt(0,numberMax+1)
+                questionText.text = getString(R.string.addition_question, getString(R.string.addition_small), numberA, numberB)
+
+                correctAnswer = numberA + numberB
+            }
+            1 -> {
+                val numberA = Random.nextInt(1,numberMax+1)
+                val numberB = Random.nextInt(0,numberA+1)
+                questionText.text = getString(R.string.subtraction_question, getString(R.string.subtraction_small), numberA, numberB)
+                correctAnswer = numberA - numberB
+            }
+            2 -> {
+                val numberA = Random.nextInt(1,numberMax+1)
+                val numberB = Random.nextInt(1,numberMax+1)
+                questionText.text = getString(R.string.multiplication_question, getString(R.string.multiplication_small), numberA, numberB)
+                correctAnswer = numberA * numberB
+            }
+            3 -> {
+                val numberA = Random.nextInt(1,numberMax+1)
+                val divisors = (1..numberA).filter { numberA % it == 0 }
+                val numberB = divisors.random()
+                questionText.text = getString(R.string.division_question, getString(R.string.division_small), numberA, numberB)
+                correctAnswer = numberA / numberB
+            }
+            4 -> {
+                val number = Random.nextInt(1,numberMax+1)
+                questionText.text = getString(R.string.square_question, getString(R.string.square_small), number)
+                correctAnswer = number * number
+            }
+            5 -> {
+                val maxRoot = sqrt((numberMax+1).toDouble()).toInt()
+                correctAnswer = Random.nextInt(1, maxRoot + 1)
+                val number = correctAnswer * correctAnswer
+                questionText.text = getString(R.string.root_question, getString(R.string.root_small), number)
+            }
         }
         startTimer()
     }
-    fun startTimer(){
+    private fun startTimer(){
         timer = object : CountDownTimer(timeLeftInMillis, 1000){
             override fun onTick(millisUntilFinished : Long){
                 timeLeftInMillis = millisUntilFinished
@@ -217,7 +221,7 @@ class GameActivity : AppCompatActivity() {
     }
     fun updateText(){
         val remTime : Int = (timeLeftInMillis / 1000).toInt()
-        timeText.text = String.format(Locale.getDefault(),"%02d", remTime) //formatira vrijeme
+        timeText.text = String.format(Locale.getDefault(),"%02d", remTime)
     }
     fun pauseTimer(){
         timer.cancel()

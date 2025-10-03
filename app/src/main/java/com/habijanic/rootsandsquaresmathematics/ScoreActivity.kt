@@ -2,25 +2,27 @@ package com.habijanic.rootsandsquaresmathematics
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 
 class ScoreActivity : AppCompatActivity() {
 
-    var score = 0
-    var number = 0
-    var type = 0
-    lateinit var typeText : TextView
-    lateinit var finalScoreText : TextView
-    lateinit var bestScoreText : TextView
-    lateinit var tryAgainButton : Button
-    lateinit var mainMenuButton : Button
-    lateinit var exitButton : Button
+    private var score = 0
+    private var number = 0
+    private var type = 0
+    private lateinit var typeText : TextView
+    private lateinit var finalScoreText : TextView
+    private lateinit var bestScoreText : TextView
+    private lateinit var tryAgainButton : Button
+    private lateinit var mainMenuButton : Button
+    private lateinit var exitButton : Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,9 +35,11 @@ class ScoreActivity : AppCompatActivity() {
             insets
         }
         // Remove background color of navigation bar
-        window.decorView.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        window.navigationBarColor = resources.getColor(android.R.color.transparent)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        val controller = WindowInsetsControllerCompat(window, window.decorView)
+        controller.hide(WindowInsetsCompat.Type.navigationBars())
+        controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        window.navigationBarColor = ContextCompat.getColor(this, android.R.color.transparent)
 
         typeText = findViewById(R.id.textViewType)
         finalScoreText = findViewById(R.id.textViewFinalScore)
@@ -84,20 +88,28 @@ class ScoreActivity : AppCompatActivity() {
     }
 
     private fun setTypeText(type: Int) {
-        if(type==0){
-            typeText.text=getString(R.string.addition)
-        }else if(type==1){
-            typeText.text=getString(R.string.subtraction)
-        }else if(type==2){
-            typeText.text=getString(R.string.multiplication)
-        }else if(type==3){
-            typeText.text=getString(R.string.division)
-        }else if(type==4){
-            typeText.text=getString(R.string.squares)
-        }else if(type==5){
-            typeText.text=getString(R.string.roots)
-        }else{
-            typeText.text=" "
+        when (type) {
+            0 -> {
+                typeText.text=getString(R.string.addition)
+            }
+            1 -> {
+                typeText.text=getString(R.string.subtraction)
+            }
+            2 -> {
+                typeText.text=getString(R.string.multiplication)
+            }
+            3 -> {
+                typeText.text=getString(R.string.division)
+            }
+            4 -> {
+                typeText.text=getString(R.string.squares)
+            }
+            5 -> {
+                typeText.text=getString(R.string.roots)
+            }
+            else -> {
+                typeText.text=" "
+            }
         }
     }
 }

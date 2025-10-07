@@ -11,8 +11,13 @@ android {
         applicationId = "com.habijanic.rootsandsquaresmathematics"
         minSdk = 24
         targetSdk = 35
+<<<<<<< Updated upstream
         versionCode = 4
         versionName = "1.1"
+=======
+        versionCode = 6
+        versionName = "3"
+>>>>>>> Stashed changes
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

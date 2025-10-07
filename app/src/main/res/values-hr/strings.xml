@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">RootsAndSquaresMathematics</string>
+    <string name="app_name">Matematika - Računske Operacije</string>
     <string name="up_to_number">Do broja:</string>
     <string name="select_the_maximum_number">Odaberi najveći broj</string>
     <string name="squares">KVADRATI</string>
     <string name="roots">KORIJENI</string>
+    <string name="squares_button">KVADRATI\n²</string>
+    <string name="roots_button">KORIJENI\n√</string>
     <string name="square_small">Kvadrat</string>
     <string name="root_small">korijen</string>
     <string name="score">Bodovi:</string>
@@ -25,6 +27,10 @@
     <string name="multiplication">MNOŽENJE</string>
     <string name="subtraction">ODUZIMANJE</string>
     <string name="addition">ZBRAJANJE</string>
+    <string name="division_button">DIJELJENJE\n÷</string>
+    <string name="multiplication_button">MNOŽENJE\n×</string>
+    <string name="subtraction_button">ODUZIMANJE\n-</string>
+    <string name="addition_button">ZBRAJANJE\n+</string>
     <string name="addition_small">Zbrajanje</string>
     <string name="subtraction_small">Oduzimanje</string>
     <string name="multiplication_small">Množenje</string>

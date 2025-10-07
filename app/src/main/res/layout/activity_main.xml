@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/addition" />
+            android:text="@string/addition_button" />
 
         <Button
             android:id="@+id/buttonSubtraction"
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/subtraction" />
+            android:text="@string/subtraction_button" />
 
     </LinearLayout>
 
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/multiplication" />
+            android:text="@string/multiplication_button" />
 
         <Button
             android:id="@+id/buttonDivision"
@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/division" />
+            android:text="@string/division_button" />
 
     </LinearLayout>
 
@@ -127,14 +127,14 @@
             android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="@string/squares" />
+            android:text="@string/squares_button" />
 
         <Button
             android:id="@+id/buttonRoots"
             android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="@string/roots" />
+            android:text="@string/roots_button" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,8 +2,10 @@ package com.habijanic.rootsandsquaresmathematics
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var root : Button
 
     private lateinit var exitButton : Button
-    private var number = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,11 +42,8 @@ class MainActivity : AppCompatActivity() {
         controller.hide(WindowInsetsCompat.Type.navigationBars())
         controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         window.navigationBarColor = ContextCompat.getColor(this, android.R.color.transparent)
-        val maxFromIntent = intent.getIntExtra("numberMax", 20)
 
 
-
-        numUpTo = findViewById(R.id.editTextNumber)
         add = findViewById(R.id.buttonAddition)
         sub = findViewById(R.id.buttonSubtraction)
         multiply = findViewById(R.id.buttonMultiplication)
@@ -55,26 +53,13 @@ class MainActivity : AppCompatActivity() {
 
         exitButton = findViewById(R.id.buttonExitMain)
 
-        numUpTo.setText(maxFromIntent.toString())
+        add.setOnClickListener { showDifficultySheet(GameType.ADD) }
+        sub.setOnClickListener { showDifficultySheet(GameType.SUB) }
+        multiply.setOnClickListener { showDifficultySheet(GameType.MUL) }
+        divide.setOnClickListener { showDifficultySheet(GameType.DIV) }
+        square.setOnClickListener { showDifficultySheet(GameType.SQUARES) }
+        root.setOnClickListener { showDifficultySheet(GameType.ROOTS) }
 
-        add.setOnClickListener{
-            numberValidation(0)
-        }
-        sub.setOnClickListener {
-            numberValidation(1)
-        }
-        multiply.setOnClickListener {
-            numberValidation(2)
-        }
-        divide.setOnClickListener {
-            numberValidation(3)
-        }
-        square.setOnClickListener {
-            numberValidation(4)
-        }
-        root.setOnClickListener {
-            numberValidation(5)
-        }
         exitButton.setOnClickListener {
 
             //val intent = Intent(Intent.ACTION_MAIN)
@@ -87,19 +72,88 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun numberValidation(type: Int) {
-        val input = numUpTo.text.toString()
-        if (input.isEmpty()){
-            Toast.makeText(applicationContext,getString(R.string.enter_a_number),Toast.LENGTH_SHORT).show()
-        }
-        else if (Integer.parseInt(input) < 2){
+
+    private fun startGame(type: GameType, maxNumber: Int){
+        if (maxNumber < 2){
             Toast.makeText(applicationContext,getString(R.string.number_to_small),Toast.LENGTH_SHORT).show()
-        }else{
-            number = Integer.parseInt(input)
-            val intent = Intent(this@MainActivity,GameActivity::class.java)
-            intent.putExtra("number",number)
-            intent.putExtra("game",type)
-            startActivity(intent)
+            return
+        }
+        val intent = Intent(this@MainActivity,GameActivity::class.java)
+        intent.putExtra(IntentKeys.NUMBER_MAX,maxNumber)
+        intent.putExtra(IntentKeys.GAME_TYPE, type.name)
+        startActivity(intent)
+
+    }
+
+
+    data class Presets(val easy: Int, val medium: Int, val hard: Int)
+    private fun presetsFor(type: GameType): Presets{
+        return when (type){
+            GameType.ADD -> Presets(10, 20, 100)
+            GameType.SUB -> Presets(10, 20, 100)
+            GameType.MUL -> Presets(5, 10, 12)
+            GameType.DIV -> Presets(5, 10, 12)
+            GameType.SQUARES -> Presets(10, 15, 20)
+            GameType.ROOTS -> Presets(10, 15, 20)
         }
     }
+
+    private fun showDifficultySheet(type: GameType){
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_difficulty, null)
+        dialog.setContentView(view)
+
+        val titleDiff = view.findViewById<TextView>(R.id.titleDiff)
+        val btnEasy = view.findViewById<Button>(R.id.btnEasy)
+        val btnMedium = view.findViewById<Button>(R.id.btnMedium)
+        val btnHard = view.findViewById<Button>(R.id.btnHard)
+        val editTextMax = view.findViewById<EditText>(R.id.editTextMax)
+        val btnPlayCustom = view.findViewById<Button>(R.id.btnPlayCustom)
+
+        val presets = presetsFor(type)
+
+        titleDiff.text = getString(R.string.difficulty)
+
+        btnEasy.text = getString(R.string.difficulty_easy, presets.easy)
+        btnMedium.text = getString(R.string.difficulty_medium, presets.medium)
+        btnHard.text = getString(R.string.difficulty_hard, presets.hard)
+
+
+        fun startAndClose(maxNumber: Int){
+            dialog.dismiss()
+            startGame(type, maxNumber)
+        }
+
+        btnEasy.setOnClickListener { startAndClose(presets.easy) }
+        btnMedium.setOnClickListener { startAndClose(presets.medium) }
+        btnHard.setOnClickListener { startAndClose(presets.hard) }
+        btnPlayCustom.setOnClickListener{
+
+            val input = editTextMax.text.toString().trim()
+            val value = input.toIntOrNull()
+
+            when {
+                input.isEmpty() || value == null -> {
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.enter_a_number),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                value < 2 -> {
+                    Toast.makeText(
+                        applicationContext,
+                        getString(R.string.number_to_small),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                else -> startAndClose(value)
+            }
+        }
+
+        dialog.show()
+
+
+    }
+
 }

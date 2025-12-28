@@ -39,7 +39,7 @@ class GameActivity : AppCompatActivity() {
     var life = 3
 
     var numberMax = 1
-    private var type = 1
+    private lateinit var gameType: GameType
 
     private lateinit var timer : CountDownTimer
     private val startTimerInMillis : Long = 20000
@@ -73,8 +73,10 @@ class GameActivity : AppCompatActivity() {
         correct = findViewById(R.id.textViewCorrect)
         correct.isVisible=false
 
-        numberMax = intent.getIntExtra("number",1)
-        type = intent.getIntExtra("game",0)
+        numberMax = intent.getIntExtra(IntentKeys.NUMBER_MAX, 1)
+        val typeName = intent.getStringExtra(IntentKeys.GAME_TYPE) ?: GameType.ADD.name
+        gameType = GameType.valueOf(typeName)
+
 
 
 
@@ -85,11 +87,7 @@ class GameActivity : AppCompatActivity() {
 
                 mainScope.launch {
                     delay(delayMillis)
-                    val intent = Intent(this@GameActivity, ScoreActivity::class.java)
-                    intent.putExtra("score", score)
-                    intent.putExtra("number", numberMax)
-                    startActivity(intent)
-                    finish()
+                    goToScore()
                 }
             }else{
                 val input = answerText.text.toString()
@@ -117,12 +115,8 @@ class GameActivity : AppCompatActivity() {
                         if(life==0){
                             mainScope.launch {
                                 delay(delayMillis)
-                                val intent = Intent(this@GameActivity, ScoreActivity::class.java)
-                                intent.putExtra("score", score)
-                                intent.putExtra("number", numberMax)
-                                intent.putExtra("type", type)
-                                startActivity(intent)
-                                finish()
+
+                                goToScore()
                             }
                         }else{
                             correct.isVisible=true
@@ -148,39 +142,39 @@ class GameActivity : AppCompatActivity() {
 
     fun game(){
 
-        when (type) {
-            0 -> {
+        when (gameType) {
+            GameType.ADD -> {
                 val numberA = Random.nextInt(0,numberMax+1)
                 val numberB = Random.nextInt(0,numberMax+1)
                 questionText.text = getString(R.string.addition_question, getString(R.string.addition_small), numberA, numberB)
 
                 correctAnswer = numberA + numberB
             }
-            1 -> {
+            GameType.SUB -> {
                 val numberA = Random.nextInt(1,numberMax+1)
                 val numberB = Random.nextInt(0,numberA+1)
                 questionText.text = getString(R.string.subtraction_question, getString(R.string.subtraction_small), numberA, numberB)
                 correctAnswer = numberA - numberB
             }
-            2 -> {
+            GameType.MUL -> {
                 val numberA = Random.nextInt(1,numberMax+1)
                 val numberB = Random.nextInt(1,numberMax+1)
                 questionText.text = getString(R.string.multiplication_question, getString(R.string.multiplication_small), numberA, numberB)
                 correctAnswer = numberA * numberB
             }
-            3 -> {
+            GameType.DIV -> {
                 val numberA = Random.nextInt(1,numberMax+1)
                 val divisors = (1..numberA).filter { numberA % it == 0 }
                 val numberB = divisors.random()
                 questionText.text = getString(R.string.division_question, getString(R.string.division_small), numberA, numberB)
                 correctAnswer = numberA / numberB
             }
-            4 -> {
+            GameType.SQUARES -> {
                 val number = Random.nextInt(1,numberMax+1)
                 questionText.text = getString(R.string.square_question, getString(R.string.square_small), number)
                 correctAnswer = number * number
             }
-            5 -> {
+            GameType.ROOTS -> {
                 val maxRoot = sqrt((numberMax+1).toDouble()).toInt()
                 correctAnswer = Random.nextInt(1, maxRoot + 1)
                 val number = correctAnswer * correctAnswer
@@ -207,11 +201,8 @@ class GameActivity : AppCompatActivity() {
                 {
                     mainScope.launch {
                         delay(delayMillis)
-                        val intent = Intent(this@GameActivity, ScoreActivity::class.java)
-                        intent.putExtra("score", score)
-                        intent.putExtra("number", numberMax)
-                        startActivity(intent)
-                        finish()
+
+                        goToScore()
                     }
                 }else{
                     game()
@@ -233,6 +224,14 @@ class GameActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         mainScope.cancel()
+    }
+    private fun goToScore() {
+        val intent = Intent(this@GameActivity, ScoreActivity::class.java)
+        intent.putExtra(IntentKeys.SCORE, score)
+        intent.putExtra(IntentKeys.NUMBER_MAX, numberMax)
+        intent.putExtra(IntentKeys.GAME_TYPE, gameType.name)
+        startActivity(intent)
+        finish()
     }
 
 }

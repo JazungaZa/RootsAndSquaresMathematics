@@ -10,13 +10,16 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:text="@string/best_score_big"
+        android:textAlignment="center"
         android:textColor="@color/yellow"
-        android:textSize="34sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewType" />
@@ -28,7 +31,7 @@
         android:layout_marginTop="10dp"
         android:text="0"
         android:textColor="@color/yellow"
-        android:textSize="34sp"
+        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="@id/textView4"
         app:layout_constraintTop_toBottomOf="@id/textView4" />
 
@@ -39,7 +42,7 @@
         android:layout_marginTop="30dp"
         android:text="@string/score_big"
         android:textColor="@color/yellow"
-        android:textSize="34sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/textView4"
         app:layout_constraintTop_toBottomOf="@id/BestScore" />
@@ -51,7 +54,7 @@
         android:layout_marginTop="10dp"
         android:text="0"
         android:textColor="@color/yellow"
-        android:textSize="34sp"
+        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="@id/textView4"
         app:layout_constraintTop_toBottomOf="@id/textView2" />
 

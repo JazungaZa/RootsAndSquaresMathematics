@@ -9,41 +9,7 @@
     tools:context=".MainActivity" >
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="161dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:gravity="center"
-            android:text="@string/up_to_number"
-            android:textColor="@color/white"
-            android:textSize="24sp" />
-
-        <EditText
-            android:id="@+id/editTextNumber"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="0dp"
-            android:gravity="center"
-            android:hint="@string/select_the_maximum_number"
-            android:inputType="number"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="14sp"
-            android:textStyle="italic" />
-    </LinearLayout>
 
     <Button
         android:id="@+id/buttonExitMain"
@@ -64,7 +30,7 @@
         android:layout_marginEnd="50dp"
         android:text="@string/addition"
         app:layout_constraintEnd_toStartOf="@+id/buttonMultiplication"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonSubtraction"
@@ -84,7 +50,7 @@
         android:text="@string/multiplication"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toTopOf="parent"  />
 
     <Button
         android:id="@+id/buttonDivision"
@@ -104,7 +70,7 @@
         android:layout_marginTop="50dp"
         android:text="@string/squares"
         app:layout_constraintStart_toEndOf="@+id/buttonMultiplication"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toTopOf="parent"  />
 
     <Button
         android:id="@+id/buttonRoots"

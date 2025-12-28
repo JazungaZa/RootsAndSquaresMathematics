@@ -22,7 +22,7 @@
     <string name="main_menu">GLAVNI MENI</string>
     <string name="exit">IZAĐI</string>
     <string name="number_to_small">Molim te upiši veći broj</string>
-    <string name="best_score_big">NAJBOLJI REZULTAT</string>
+    <string name="best_score_big">NAJBOLJI REZULTAT ZA OVU TEŽINU</string>
     <string name="division">DIJELJENJE</string>
     <string name="multiplication">MNOŽENJE</string>
     <string name="subtraction">ODUZIMANJE</string>
@@ -35,4 +35,14 @@
     <string name="subtraction_small">Oduzimanje</string>
     <string name="multiplication_small">Množenje</string>
     <string name="division_small">Dijeljenje</string>
+    <string name="difficulty">TEŽINA</string>
+    <string name="enter_max_num">Unesite maksimalni broj</string>
+    <string name="easy">Lako</string>
+    <string name="medium">Srednje</string>
+    <string name="hard">Teško</string>
+    <string name="play">Igraj</string>
+    <string name="custom">PRILAGOĐENO</string>
+    <string name="difficulty_easy">Lako (%1$d)</string>
+    <string name="difficulty_medium">Srednje (%1$d)</string>
+    <string name="difficulty_hard">Teško (%1$d)</string>
 </resources>

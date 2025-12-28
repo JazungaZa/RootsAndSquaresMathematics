@@ -34,11 +34,22 @@
     <string name="write_an_answer">Please write an answer</string>
     <string name="game_over">Game Over</string>
     <string name="score_big">SCORE</string>
-    <string name="best_score_big">BEST SCORE</string>
+    <string name="best_score_big">BEST SCORE FOR THIS DIFFICULTY</string>
     <string name="enter_a_number">Please enter a number</string>
     <string name="number_to_small">Please enter a bigger number</string>
     <string name="try_again">TRY AGAIN</string>
     <string name="main_menu">MAIN MENU</string>
     <string name="exit">EXIT</string>
+    <string name="difficulty">DIFFICULTY</string>
+    <string name="enter_max_num">Enter the maximum number</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+    <string name="play">Play</string>
+    <string name="custom">CUSTOM</string>
+    <string name="difficulty_easy">Easy (%1$d)</string>
+    <string name="difficulty_medium">Medium (%1$d)</string>
+    <string name="difficulty_hard">Hard (%1$d)</string>
+
 
 </resources>

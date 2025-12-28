@@ -16,7 +16,8 @@ class ScoreActivity : AppCompatActivity() {
 
     private var score = 0
     private var number = 0
-    private var type = 0
+    private lateinit var gameType: GameType
+
     private lateinit var typeText : TextView
     private lateinit var finalScoreText : TextView
     private lateinit var bestScoreText : TextView
@@ -48,19 +49,22 @@ class ScoreActivity : AppCompatActivity() {
         mainMenuButton = findViewById(R.id.buttonMainMenu)
         exitButton = findViewById(R.id.buttonExit)
 
-        score = intent.getIntExtra("score",0)
-        number = intent.getIntExtra("number",0)
-        type = intent.getIntExtra("type",0)
-        finalScoreText.text = score.toString()
-        bestScoreText.text = BestScoreStore.updateIfHigher(this, score, type).toString()
+        score = intent.getIntExtra(IntentKeys.SCORE, 0)
+        number = intent.getIntExtra(IntentKeys.NUMBER_MAX, 0)
+        val typeName = intent.getStringExtra(IntentKeys.GAME_TYPE) ?: GameType.ADD.name
+        gameType = GameType.valueOf(typeName)
 
-        setTypeText(type)
+
+        finalScoreText.text = score.toString()
+        bestScoreText.text = BestScoreStore.updateIfHigher(this, score, gameType, number).toString()
+
+        setTypeText(gameType)
 
         tryAgainButton.setOnClickListener {
 
             val intent = Intent(this@ScoreActivity,GameActivity::class.java)
-            intent.putExtra("number",number)
-            intent.putExtra("game",type)
+            intent.putExtra(IntentKeys.NUMBER_MAX, number)
+            intent.putExtra(IntentKeys.GAME_TYPE, gameType.name)
             startActivity(intent)
             finish()
 
@@ -68,7 +72,7 @@ class ScoreActivity : AppCompatActivity() {
         mainMenuButton.setOnClickListener {
 
             val intent = Intent(this@ScoreActivity,MainActivity::class.java)
-            intent.putExtra("numberMax", number)
+            intent.putExtra(IntentKeys.NUMBER_MAX, number)
             startActivity(intent)
             finish()
 
@@ -88,29 +92,14 @@ class ScoreActivity : AppCompatActivity() {
 
     }
 
-    private fun setTypeText(type: Int) {
-        when (type) {
-            0 -> {
-                typeText.text=getString(R.string.addition)
-            }
-            1 -> {
-                typeText.text=getString(R.string.subtraction)
-            }
-            2 -> {
-                typeText.text=getString(R.string.multiplication)
-            }
-            3 -> {
-                typeText.text=getString(R.string.division)
-            }
-            4 -> {
-                typeText.text=getString(R.string.squares)
-            }
-            5 -> {
-                typeText.text=getString(R.string.roots)
-            }
-            else -> {
-                typeText.text=" "
-            }
+    private fun setTypeText(type: GameType) {
+        typeText.text = when (type) {
+            GameType.ADD -> getString(R.string.addition)
+            GameType.SUB -> getString(R.string.subtraction)
+            GameType.MUL -> getString(R.string.multiplication)
+            GameType.DIV -> getString(R.string.division)
+            GameType.SQUARES -> getString(R.string.squares)
+            GameType.ROOTS -> getString(R.string.roots)
         }
     }
 }

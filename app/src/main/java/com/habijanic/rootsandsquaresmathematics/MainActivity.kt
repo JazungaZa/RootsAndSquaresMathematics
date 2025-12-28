@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         controller.hide(WindowInsetsCompat.Type.navigationBars())
         controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         window.navigationBarColor = ContextCompat.getColor(this, android.R.color.transparent)
+        val maxFromIntent = intent.getIntExtra("numberMax", 20)
 
 
 
@@ -53,6 +54,8 @@ class MainActivity : AppCompatActivity() {
         root = findViewById(R.id.buttonRoots)
 
         exitButton = findViewById(R.id.buttonExitMain)
+
+        numUpTo.setText(maxFromIntent.toString())
 
         add.setOnClickListener{
             numberValidation(0)

@@ -68,6 +68,7 @@ class ScoreActivity : AppCompatActivity() {
         mainMenuButton.setOnClickListener {
 
             val intent = Intent(this@ScoreActivity,MainActivity::class.java)
+            intent.putExtra("numberMax", number)
             startActivity(intent)
             finish()
 

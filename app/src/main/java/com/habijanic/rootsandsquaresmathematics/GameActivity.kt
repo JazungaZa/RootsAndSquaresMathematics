@@ -21,7 +21,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Locale
-import kotlin.math.sqrt
 import kotlin.random.Random
 
 class GameActivity : AppCompatActivity() {
@@ -144,15 +143,17 @@ class GameActivity : AppCompatActivity() {
 
         when (gameType) {
             GameType.ADD -> {
-                val numberA = Random.nextInt(0,numberMax+1)
+                val numberA = Random.nextInt(1,numberMax+1)
                 val numberB = Random.nextInt(0,numberMax+1)
                 questionText.text = getString(R.string.addition_question, getString(R.string.addition_small), numberA, numberB)
 
                 correctAnswer = numberA + numberB
             }
             GameType.SUB -> {
-                val numberA = Random.nextInt(1,numberMax+1)
-                val numberB = Random.nextInt(0,numberA+1)
+                val num1 = Random.nextInt(1, numberMax + 1)
+                val num2 = Random.nextInt(0, numberMax + 1)
+                val numberA = maxOf(num1, num2)
+                val numberB = minOf(num1, num2)
                 questionText.text = getString(R.string.subtraction_question, getString(R.string.subtraction_small), numberA, numberB)
                 correctAnswer = numberA - numberB
             }
@@ -163,11 +164,10 @@ class GameActivity : AppCompatActivity() {
                 correctAnswer = numberA * numberB
             }
             GameType.DIV -> {
-                val numberA = Random.nextInt(1,numberMax+1)
-                val divisors = (1..numberA).filter { numberA % it == 0 }
-                val numberB = divisors.random()
-                questionText.text = getString(R.string.division_question, getString(R.string.division_small), numberA, numberB)
-                correctAnswer = numberA / numberB
+                val divisor = Random.nextInt(1, numberMax + 1)
+                correctAnswer = Random.nextInt(1, numberMax + 1)
+                val dividend = divisor * correctAnswer
+                questionText.text = getString(R.string.division_question, getString(R.string.division_small), dividend, divisor)
             }
             GameType.SQUARES -> {
                 val number = Random.nextInt(1,numberMax+1)
@@ -175,10 +175,9 @@ class GameActivity : AppCompatActivity() {
                 correctAnswer = number * number
             }
             GameType.ROOTS -> {
-                val maxRoot = sqrt((numberMax+1).toDouble()).toInt()
-                correctAnswer = Random.nextInt(1, maxRoot + 1)
-                val number = correctAnswer * correctAnswer
-                questionText.text = getString(R.string.root_question, getString(R.string.root_small), number)
+                correctAnswer = Random.nextInt(1, numberMax + 1)
+                val square = correctAnswer * correctAnswer
+                questionText.text = getString(R.string.root_question, getString(R.string.root_small), square)
             }
         }
         startTimer()

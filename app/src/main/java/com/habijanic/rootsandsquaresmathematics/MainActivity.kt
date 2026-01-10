@@ -1,10 +1,12 @@
 package com.habijanic.rootsandsquaresmathematics
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var divide : Button
     private lateinit var square : Button
     private lateinit var root : Button
+    private lateinit var instagramButton : ImageButton
 
     private lateinit var exitButton : Button
 
@@ -50,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         divide = findViewById(R.id.buttonDivision)
         square = findViewById(R.id.buttonSquares)
         root = findViewById(R.id.buttonRoots)
+        instagramButton = findViewById(R.id.imageButtonInstagram)
 
         exitButton = findViewById(R.id.buttonExitMain)
 
@@ -60,16 +64,28 @@ class MainActivity : AppCompatActivity() {
         square.setOnClickListener { showDifficultySheet(GameType.SQUARES) }
         root.setOnClickListener { showDifficultySheet(GameType.ROOTS) }
 
-        exitButton.setOnClickListener {
-
-            //val intent = Intent(Intent.ACTION_MAIN)
-            //intent.addCategory(Intent.CATEGORY_HOME)
-            //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            //startActivity(intent)
-            this.finishAffinity()
-
+        instagramButton.setOnClickListener {
+            openInstagram("apps_by_amy")
         }
 
+        exitButton.setOnClickListener {
+            this.finishAffinity()
+        }
+
+    }
+
+    private fun openInstagram(username: String) {
+        val uri = Uri.parse("http://instagram.com/_u/$username")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+
+        intent.setPackage("com.instagram.android")
+
+        try {
+            startActivity(intent)
+        } catch (e: Exception) {
+            // Ako Instagram nije instaliran, otvori u pregledniku
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://instagram.com/$username")))
+        }
     }
 
 

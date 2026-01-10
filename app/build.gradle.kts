@@ -11,15 +11,16 @@ android {
         applicationId = "com.habijanic.rootsandsquaresmathematics"
         minSdk = 24
         targetSdk = 35
-        versionCode = 6
-        versionName = "3"
+        versionCode = 8
+        versionName = "3.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true // Uključuje ProGuard/R8
+            isShrinkResources = true // Uklanja neiskorištene resurse
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

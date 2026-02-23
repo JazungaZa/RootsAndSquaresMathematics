@@ -84,48 +84,210 @@
         android:id="@+id/textViewQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="60dp"
         android:text="Question"
         android:textColor="@color/yellow"
-        android:textSize="24sp"
+        android:textSize="32sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
+    <!-- textViewCorrect služi kao overlay efekt -->
     <TextView
         android:id="@+id/textViewCorrect"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/correct"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextNumberAnswer"
-        app:layout_constraintEnd_toEndOf="@+id/editTextNumberAnswer"
-        app:layout_constraintStart_toStartOf="@+id/editTextNumberAnswer"
-        app:layout_constraintTop_toTopOf="@+id/editTextNumberAnswer" />
+        android:elevation="2dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewAnswer"
+        app:layout_constraintEnd_toEndOf="@+id/textViewAnswer"
+        app:layout_constraintStart_toStartOf="@+id/textViewAnswer"
+        app:layout_constraintTop_toTopOf="@+id/textViewAnswer" />
 
-    <EditText
-        android:id="@+id/editTextNumberAnswer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/textViewAnswer"
+        android:layout_width="220dp"
+        android:layout_height="64dp"
         android:layout_marginTop="60dp"
-        android:ems="10"
+        android:background="#33FFFFFF"
+        android:gravity="center"
         android:hint="@string/answer"
-        android:inputType="number"
         android:textColor="@color/yellow"
-        android:textColorHint="@color/yellow"
-        android:textSize="20sp"
+        android:textColorHint="#88F0F016"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewQuestion" />
 
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonNext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TableRow android:gravity="center">
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/red"
+                android:text="1"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:cornerRadius="40dp" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/red"
+                android:text="2"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:cornerRadius="40dp" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/red"
+                android:text="3"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:cornerRadius="40dp" />
+        </TableRow>
+
+        <TableRow android:gravity="center">
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/red"
+                android:text="4"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:cornerRadius="40dp" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/red"
+                android:text="5"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:cornerRadius="40dp" />
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/red"
+                android:text="6"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:cornerRadius="40dp" />
+        </TableRow>
+
+        <TableRow android:gravity="center">
+
+            <Button
+                android:id="@+id/button7"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/red"
+                android:text="7"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:cornerRadius="40dp" />
+
+            <Button
+                android:id="@+id/button8"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/red"
+                android:text="8"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:cornerRadius="40dp" />
+
+            <Button
+                android:id="@+id/button9"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/red"
+                android:text="9"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:cornerRadius="40dp" />
+        </TableRow>
+
+        <TableRow android:gravity="center">
+
+            <Button
+                android:id="@+id/buttonClear"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/red"
+                android:text="C"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                app:cornerRadius="40dp" />
+
+            <Button
+                android:id="@+id/button0"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/red"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:cornerRadius="40dp" />
+
+            <Button
+                android:id="@+id/buttonDelete"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/red"
+                android:text="&#9003;"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:cornerRadius="40dp" />
+        </TableRow>
+    </TableLayout>
+
     <Button
         android:id="@+id/buttonNext"
-        android:layout_width="115dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="200dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="@color/blue"
         android:text="@string/next"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumberAnswer" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

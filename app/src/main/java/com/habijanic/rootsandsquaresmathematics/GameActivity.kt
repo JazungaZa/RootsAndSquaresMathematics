@@ -6,7 +6,6 @@ import android.os.CountDownTimer
 import android.util.Log
 import android.util.TypedValue
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -33,7 +32,7 @@ class GameActivity : AppCompatActivity() {
     lateinit var lifeText : TextView
     private lateinit var timeText : TextView
     private lateinit var questionText : TextView
-    private lateinit var answerText : EditText
+    private lateinit var answerText : TextView
     private lateinit var nextButton: Button
     private lateinit var correct : TextView
 
@@ -73,10 +72,12 @@ class GameActivity : AppCompatActivity() {
         lifeText = findViewById(R.id.textViewLife)
         timeText = findViewById(R.id.textViewTime)
         questionText = findViewById(R.id.textViewQuestion)
-        answerText = findViewById(R.id.editTextNumberAnswer)
+        answerText = findViewById(R.id.textViewAnswer)
         nextButton = findViewById(R.id.buttonNext)
         correct = findViewById(R.id.textViewCorrect)
         correct.isVisible=false
+
+        setupNumericKeyboard()
 
         numberMax = intent.getIntExtra(IntentKeys.NUMBER_MAX, 1)
         val typeName = intent.getStringExtra(IntentKeys.GAME_TYPE) ?: GameType.ADD.name
@@ -101,8 +102,9 @@ class GameActivity : AppCompatActivity() {
                 }else{
                     val userAnswer = input.toInt()
                     
-                    // Odmah brišemo upisani broj
-                    answerText.setText("")
+                    // Makni hint i prikaži upisani broj u overlayu
+                    answerText.hint = ""
+                    correct.text = input
 
                     if(userAnswer==correctAnswer){
                         score += 10
@@ -111,19 +113,10 @@ class GameActivity : AppCompatActivity() {
                         // Otežaj igru svakih 50 bodova
                         if (score % 50 == 0) {
                             isLevelUp = true
-                            val oldMin = numberMin
-                            val oldTime = currentTimerLimit
-                            
-                            // Smanji vrijeme (ne ispod 5s)
                             if (currentTimerLimit > 5000) currentTimerLimit -= 1000
-                            
-                            // Povećaj minimum, ali zadrži barem 50% raspona dostupnim za raznolikost
                             val minGap = (numberMax * 0.5).toInt().coerceAtLeast(1)
                             if (numberMin < numberMax - minGap) {
                                 numberMin++
-                                Log.d(TAG, "TEŽINA POVEĆANA! Bodovi: $score | Vrijeme: ${oldTime/1000}s -> ${currentTimerLimit/1000}s | Min: $oldMin -> $numberMin")
-                            } else {
-                                Log.d(TAG, "VRIJEME SMANJENO! Bodovi: $score | Vrijeme: ${oldTime/1000}s -> ${currentTimerLimit/1000}s | Raspon je ostao isti radi raznolikosti.")
                             }
                         }
 
@@ -134,23 +127,22 @@ class GameActivity : AppCompatActivity() {
                         if (isLevelUp) {
                             correct.text = getString(R.string.level_up)
                             correct.setTextColor(ContextCompat.getColor(this, android.R.color.black))
-                            correct.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40f)
-                            answerText.hint = "" // Makni hint privremeno
+                            correct.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30f)
                         } else {
-                            correct.text = "" 
+                            correct.setTextColor(ContextCompat.getColor(this, android.R.color.black))
                         }
                         
                         correct.isVisible=true
+                        answerText.text = ""
+
                         mainScope.launch{
                             delay(currentDelay)
                             game()
                             scoreText.text = score.toString()
                             
-                            // Vraćamo stil na staro za sljedeću rundu
                             correct.isVisible=false
-                            correct.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24f)
-                            correct.setTextColor(ContextCompat.getColor(this@GameActivity, android.R.color.white))
-                            answerText.hint = getString(R.string.answer) // Vrati hint
+                            correct.setTextSize(TypedValue.COMPLEX_UNIT_SP, 36f)
+                            answerText.hint = getString(R.string.answer) // Vrati hint natrag
                         }
                     }else{
                         life--
@@ -162,10 +154,13 @@ class GameActivity : AppCompatActivity() {
                                 goToScore()
                             }
                         }else{
-                            correct.text = ""
                             correct.isVisible=true
                             var color = ContextCompat.getColor(this,R.color.wrong)
                             correct.setBackgroundColor(color)
+                            correct.setTextColor(ContextCompat.getColor(this, android.R.color.black))
+                            
+                            answerText.text = ""
+
                             mainScope.launch{
                                 delay(delayMillis)
                                 game()
@@ -173,6 +168,7 @@ class GameActivity : AppCompatActivity() {
                                 correct.isVisible=false
                                 color = ContextCompat.getColor(this@GameActivity,R.color.correct)
                                 correct.setBackgroundColor(color)
+                                answerText.hint = getString(R.string.answer) // Vrati hint natrag
                                 lifeText.text=life.toString()
                             }
                         }
@@ -182,8 +178,35 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupNumericKeyboard() {
+        val buttons = listOf(
+            R.id.button0, R.id.button1, R.id.button2, R.id.button3, R.id.button4,
+            R.id.button5, R.id.button6, R.id.button7, R.id.button8, R.id.button9
+        )
+
+        for (id in buttons) {
+            findViewById<Button>(id).setOnClickListener {
+                val currentText = answerText.text.toString()
+                if (currentText.length < 8) {
+                    val digit = (it as Button).text.toString()
+                    answerText.text = currentText + digit
+                }
+            }
+        }
+
+        findViewById<Button>(R.id.buttonClear).setOnClickListener {
+            answerText.text = ""
+        }
+
+        findViewById<Button>(R.id.buttonDelete).setOnClickListener {
+            val currentText = answerText.text.toString()
+            if (currentText.isNotEmpty()) {
+                answerText.text = currentText.substring(0, currentText.length - 1)
+            }
+        }
+    }
+
     fun game(){
-        Log.d(TAG, "Nova runda: Raspon [$numberMin - $numberMax] | Vrijeme: ${currentTimerLimit/1000}s")
         when (gameType) {
             GameType.ADD -> {
                 val numberA = Random.nextInt(numberMin, numberMax + 1)
@@ -194,20 +217,17 @@ class GameActivity : AppCompatActivity() {
             GameType.SUB -> {
                 val numberA = Random.nextInt(numberMin, numberMax + 1)
                 var numberB = Random.nextInt(0, numberA + 1)
-                
                 if (score > 150 && numberA > 1) {
                     while (numberB == 0 || numberB == numberA) {
                         numberB = Random.nextInt(0, numberA + 1)
                     }
                 }
-                
                 questionText.text = getString(R.string.subtraction_question, getString(R.string.subtraction_small), numberA, numberB)
                 correctAnswer = numberA - numberB
             }
             GameType.MUL -> {
                 var numberA = Random.nextInt(maxOf(1, numberMin), numberMax + 1)
                 var numberB = Random.nextInt(maxOf(1, numberMin), numberMax + 1)
-                
                 if (score > 150 && numberMax > 5) {
                     while (numberA == 1 || (numberA == 10 && numberMax > 10)) {
                         numberA = Random.nextInt(maxOf(1, numberMin), numberMax + 1)
@@ -216,14 +236,12 @@ class GameActivity : AppCompatActivity() {
                         numberB = Random.nextInt(maxOf(1, numberMin), numberMax + 1)
                     }
                 }
-                
                 questionText.text = getString(R.string.multiplication_question, getString(R.string.multiplication_small), numberA, numberB)
                 correctAnswer = numberA * numberB
             }
             GameType.DIV -> {
                 var divisor = Random.nextInt(maxOf(1, numberMin), numberMax + 1)
                 var result = Random.nextInt(maxOf(1, numberMin), numberMax + 1)
-                
                 if (score > 150 && numberMax > 2) {
                     while (divisor == 1) {
                         divisor = Random.nextInt(maxOf(1, numberMin), numberMax + 1)
@@ -232,7 +250,6 @@ class GameActivity : AppCompatActivity() {
                         result = Random.nextInt(maxOf(1, numberMin), numberMax + 1)
                     }
                 }
-                
                 correctAnswer = result
                 val dividend = divisor * correctAnswer
                 questionText.text = getString(R.string.division_question, getString(R.string.division_small), dividend, divisor)
@@ -268,10 +285,8 @@ class GameActivity : AppCompatActivity() {
                 pauseTimer()
                 resetTimer()
                 updateText()
-
                 life--
                 lifeText.text = life.toString()
-
                 if (life==0) {
                     mainScope.launch {
                         delay(delayMillis)

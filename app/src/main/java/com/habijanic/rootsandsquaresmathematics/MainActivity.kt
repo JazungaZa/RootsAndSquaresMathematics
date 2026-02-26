@@ -1,25 +1,31 @@
 package com.habijanic.rootsandsquaresmathematics
 
+import android.Manifest
+import android.app.TimePickerDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var numUpTo : EditText
     private lateinit var add : Button
     private lateinit var sub : Button
     private lateinit var multiply : Button
@@ -27,8 +33,20 @@ class MainActivity : AppCompatActivity() {
     private lateinit var square : Button
     private lateinit var root : Button
     private lateinit var instagramButton : ImageButton
+    private lateinit var reminderButton : ImageButton
 
     private lateinit var exitButton : Button
+    private lateinit var notificationHelper: NotificationHelper
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            notificationHelper.scheduleReminder()
+        } else {
+            Toast.makeText(this, "Notifications disabled", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +64,8 @@ class MainActivity : AppCompatActivity() {
         controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         window.navigationBarColor = ContextCompat.getColor(this, android.R.color.transparent)
 
+        notificationHelper = NotificationHelper(this)
+        checkNotificationPermission()
 
         add = findViewById(R.id.buttonAddition)
         sub = findViewById(R.id.buttonSubtraction)
@@ -54,6 +74,7 @@ class MainActivity : AppCompatActivity() {
         square = findViewById(R.id.buttonSquares)
         root = findViewById(R.id.buttonRoots)
         instagramButton = findViewById(R.id.imageButtonInstagram)
+        reminderButton = findViewById(R.id.buttonReminder)
 
         exitButton = findViewById(R.id.buttonExitMain)
 
@@ -68,10 +89,27 @@ class MainActivity : AppCompatActivity() {
             openInstagram("apps_by_amy")
         }
 
+        reminderButton.setOnClickListener {
+            showReminderSettings()
+        }
         exitButton.setOnClickListener {
             this.finishAffinity()
         }
 
+    }
+
+    private fun checkNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) !=
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            } else {
+                notificationHelper.scheduleReminder()
+            }
+        } else {
+            notificationHelper.scheduleReminder()
+        }
     }
 
     private fun openInstagram(username: String) {
@@ -115,7 +153,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showDifficultySheet(type: GameType){
-        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(this)
+        val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottomsheet_difficulty, null)
         dialog.setContentView(view)
 
@@ -168,8 +206,50 @@ class MainActivity : AppCompatActivity() {
         }
 
         dialog.show()
+    }
 
+    private fun showReminderSettings() {
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_reminder, null)
+        dialog.setContentView(view)
 
+        val checkBox = view.findViewById<CheckBox>(R.id.checkBoxReminder)
+        val btnSetTime = view.findViewById<Button>(R.id.btnSetTime)
+        val btnSave = view.findViewById<Button>(R.id.btnSaveReminder)
+
+        var selectedHour = notificationHelper.getReminderHour()
+        var selectedMinute = notificationHelper.getReminderMinute()
+
+        checkBox.isChecked = notificationHelper.isReminderEnabled()
+        btnSetTime.text = getString(R.string.reminder_set_to, selectedHour, selectedMinute)
+
+        btnSetTime.setOnClickListener {
+            TimePickerDialog(this, { _, hour, minute ->
+                selectedHour = hour
+                selectedMinute = minute
+                btnSetTime.text = getString(R.string.reminder_set_to, selectedHour, selectedMinute)
+            }, selectedHour, selectedMinute, true).show()
+        }
+
+        btnSave.setOnClickListener {
+            if (checkBox.isChecked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) !=
+                    PackageManager.PERMISSION_GRANTED
+                ) {
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    // Ne zatvaramo dijalog jer čekamo dozvolu
+                    return@setOnClickListener
+                }
+            }
+
+            notificationHelper.updateSettings(checkBox.isChecked, selectedHour, selectedMinute)
+            val msg = if (checkBox.isChecked) 
+                getString(R.string.reminder_set_to, selectedHour, selectedMinute) 
+                else getString(R.string.reminder_off)
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
 }

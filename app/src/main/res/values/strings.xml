@@ -51,8 +51,16 @@
     <string name="difficulty_easy">Easy (%1$d)</string>
     <string name="difficulty_medium">Medium (%1$d)</string>
     <string name="difficulty_hard">Hard (%1$d)</string>
-    <string name="level_up">LEVEL UP!</string>
-    <string name="instagram">Instagram</string>
+    <string name="level_up" translatable="false">LEVEL UP!</string>
+    <string name="instagram" translatable="false">Instagram</string>
 
+    <string name="reminder">Reminder</string>
+    <string name="reminder_set_to">Reminder set to %1$02d:%2$02d</string>
+    <string name="reminder_off">Reminder turned off</string>
+    <string name="notification_title">Time for Math!</string>
+    <string name="notification_text">Don\'t forget to practice your math skills today!</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="enable_reminder">Enable daily reminder</string>
 
 </resources>

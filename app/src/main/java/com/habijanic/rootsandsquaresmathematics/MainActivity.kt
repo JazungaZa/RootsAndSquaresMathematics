@@ -2,6 +2,7 @@ package com.habijanic.rootsandsquaresmathematics
 
 import android.Manifest
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -65,6 +66,10 @@ class MainActivity : AppCompatActivity() {
         window.navigationBarColor = ContextCompat.getColor(this, android.R.color.transparent)
 
         notificationHelper = NotificationHelper(this)
+        
+        // Zabilježi da je aplikacija otvorena (za automatsko gašenje podsjetnika nakon neaktivnosti)
+        recordAppOpen()
+        
         checkNotificationPermission()
 
         add = findViewById(R.id.buttonAddition)
@@ -96,6 +101,11 @@ class MainActivity : AppCompatActivity() {
             this.finishAffinity()
         }
 
+    }
+
+    private fun recordAppOpen() {
+        val prefs = getSharedPreferences("reminder_prefs", Context.MODE_PRIVATE)
+        prefs.edit().putLong("last_open_timestamp", System.currentTimeMillis()).apply()
     }
 
     private fun checkNotificationPermission() {
@@ -241,7 +251,7 @@ class MainActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
             }
-
+            
             notificationHelper.updateSettings(checkBox.isChecked, selectedHour, selectedMinute)
             val msg = if (checkBox.isChecked) 
                 getString(R.string.reminder_set_to, selectedHour, selectedMinute) 

@@ -6,19 +6,25 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import java.util.Calendar
+import java.util.concurrent.TimeUnit
 
 class NotificationHelper(private val context: Context) {
 
     private val prefs: SharedPreferences = context.getSharedPreferences("reminder_prefs", Context.MODE_PRIVATE)
 
     fun scheduleReminder() {
-        val isEnabled = prefs.getBoolean("reminder_enabled", true) // Defaultno uključeno
+        val isEnabled = prefs.getBoolean("reminder_enabled", true)
         if (!isEnabled) {
             cancelReminder()
             return
         }
 
-        val hour = prefs.getInt("reminder_hour", 20) // Defaultno 20h
+        // Provjera neaktivnosti
+        if (isUserInactive()) {
+            cancelReminder()
+            return
+        }
+        val hour = prefs.getInt("reminder_hour", 20)
         val minute = prefs.getInt("reminder_minute", 0)
 
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -60,6 +66,14 @@ class NotificationHelper(private val context: Context) {
         }
     }
 
+    private fun isUserInactive(): Boolean {
+        val lastOpen = prefs.getLong("last_open_timestamp", 0L)
+        if (lastOpen == 0L) return false // Prvo pokretanje, smatraj aktivnim
+        val diffInMs = System.currentTimeMillis() - lastOpen
+        val diffInDays = TimeUnit.MILLISECONDS.toDays(diffInMs)
+        return diffInDays >= 5
+    }
+
     fun cancelReminder() {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, ReminderReceiver::class.java)
@@ -75,6 +89,8 @@ class NotificationHelper(private val context: Context) {
             putBoolean("reminder_enabled", enabled)
             putInt("reminder_hour", hour)
             putInt("reminder_minute", minute)
+            // Resetiraj timestamp kad korisnik ručno promijeni postavke
+            putLong("last_open_timestamp", System.currentTimeMillis())
             apply()
         }
         scheduleReminder()

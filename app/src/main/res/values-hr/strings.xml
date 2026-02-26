@@ -45,4 +45,12 @@
     <string name="difficulty_easy">Lako (%1$d)</string>
     <string name="difficulty_medium">Srednje (%1$d)</string>
     <string name="difficulty_hard">Teško (%1$d)</string>
+    <string name="reminder">Podsjetnik</string>
+    <string name="reminder_set_to">Postavljen na %1$02d:%2$02d</string>
+    <string name="reminder_off">Podsjetnik ugašen</string>
+    <string name="notification_title">Vrijeme za matematiku!</string>
+    <string name="notification_text">Ne zaboravi vježbati matematiku!</string>
+    <string name="save">Spremi</string>
+    <string name="cancel">Odustani</string>
+    <string name="enable_reminder">Dopusti podsjetnik</string>
 </resources>

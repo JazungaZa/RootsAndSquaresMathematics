@@ -1,13 +1,13 @@
 # Roots & Squares Mathematics
 
-An Android application designed to perform quick mathematical calculations for squares and square roots. This app is optimized for **Android 15 (API 35)** and follows modern development standards.
+A dedicated Android practice application designed to help users master mental math, specifically focusing on squares and square roots. This app is built to provide a focused learning environment while adhering to the latest **Android 15 (API 35)** standards.
 
 ## 🚀 Key Features
 
-*   **Square Calculator:** Instantly compute the square of any given number.
-*   **Square Root Calculator:** High-precision calculations for square roots.
-*   **Edge-to-Edge Experience:** Fully compatible with Android 15's mandatory edge-to-edge display, ensuring the UI flows beautifully under system bars.
-*   **Performance:** Uses Kotlin Coroutines for efficient, non-blocking mathematical operations.
+*   **Mental Math Practice:** Engage in exercises to improve your speed and accuracy in calculating squares and roots.
+*   **Educational Focus:** Designed as a training tool for students and math enthusiasts rather than a simple utility.
+*   **Edge-to-Edge Experience:** Fully optimized for Android 15. The UI seamlessly integrates with the system bars for a modern, immersive learning experience.
+*   **Clean Interface:** Minimalist design to ensure zero distractions during practice sessions.
 
 ## 🛠 Technical Specifications
 
@@ -15,32 +15,28 @@ An Android application designed to perform quick mathematical calculations for s
 *   **Minimum SDK:** 24 (Android 7.0)
 *   **Language:** Kotlin
 *   **UI Architecture:** XML with `ConstraintLayout` & Google Material Design 3
-*   **Dependencies:**
-    *   `androidx.activity-ktx:1.9.3` (for Edge-to-Edge support)
-    *   `kotlinx-coroutines` (for background tasks)
-    *   `material:1.12.0`
+*   **Edge-to-Edge Support:** Implemented via `androidx.activity:activity-ktx:1.9.3`.
 
-## 📱 Installation & Setup
+## 📱 How to Use for Practice
 
-1.  Open the project in **Android Studio** (Ladybug or newer recommended).
-2.  Ensure you have **JDK 17** configured.
-3.  Sync Gradle files to download dependencies.
-4.  Run the `app` module on an emulator or physical device.
+1.  **Open the App:** Launch the application on your Android device.
+2.  **Practice Session:** Use the provided prompts to calculate squares or roots in your head.
+3.  **Input & Verify:** Enter your results to check your progress and improve your mathematical skills.
 
-## 🔧 Android 15 Compatibility Note
-This app addresses the "Edge-to-Edge" recommendation from Google Play. 
-- It uses `enableEdgeToEdge()` in `MainActivity`.
-- It implements `WindowInsetsCompat` to ensure that UI elements like buttons and text inputs are not covered by the system status bar or navigation gesture area.
+## 🔧 Android 15 Implementation
+This app is fully compliant with Google Play's latest requirements:
+- **Edge-to-Edge:** Uses `enableEdgeToEdge()` to ensure the practice area utilizes the full screen.
+- **Insets Handling:** Implements `WindowInsetsCompat` so that interactive elements remain accessible and are not hidden behind the status bar or navigation gestures.
 
 ## 📦 Version History
 *   **Current Version:** 3.3 (Version Code 9)
-    *   Added full support for Android 15 Edge-to-Edge display.
-    *   Updated `targetSdk` to 35.
-    *   Optimized layout padding for system bars.
+    *   Transitioned to full Android 15 (API 35) support.
+    *   Resolved Google Play Console "Edge-to-Edge" warnings.
+    *   Improved layout responsiveness for system bar insets.
 
 ## 👤 Author
 **Habijanić**
 Project Path: `C:/Users/Admin/Documents/GitHub/RootsAndSquaresMathematics`
 
 ---
-*Developed for educational and practical mathematical purposes.*
+*Empowering users to master mathematical fundamentals through consistent practice.*
